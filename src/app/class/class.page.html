@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="text-align: center;">新闻分类</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- 新闻类别 -->
+  <ion-card (click)="toSubNews()">
+    <ion-item lines="none" button>
+      <ion-avatar>
+        <img src="../../assets/newsImg/yangshi.jpg" />
+      </ion-avatar>
+      <ion-label style="margin-left: 20px;">娱乐新闻</ion-label>
+    </ion-item>
+  </ion-card>
+  <ion-card>
+    <ion-item lines="none" button>
+      <ion-avatar>
+        <img src="../../assets/newsImg/i-newsImg.jpg" />
+      </ion-avatar>
+      <ion-label style="margin-left: 20px;">政治新闻</ion-label>
+    </ion-item>
+  </ion-card>
+  <ion-card>
+    <ion-item lines="none" button>
+      <ion-avatar>
+        <img src="../../assets/newsImg/yangshi.jpg" />
+      </ion-avatar>
+      <ion-label style="margin-left: 20px;">八卦新闻</ion-label>
+    </ion-item>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,10 @@
+.container{
+    ion-item{
+        --padding-start: 0;
+        --padding-end: 0;
+    }
+    .sendBtnBox{
+        display: flex;
+        justify-content: flex-end;
+    }
+}

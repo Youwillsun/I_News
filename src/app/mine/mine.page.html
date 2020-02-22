@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="text-align: center;">我的</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- 个人信息卡片 -->
+  <ion-card>
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <ion-avatar>
+          <img src="../../assets/newsImg/yangshi.jpg">
+        </ion-avatar>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>流年不追忆</h2>
+        <p>这是我的个人简介，这是我的个人简介这是我的个人简介，这是我的个人简介。。。</p>
+      </ion-label>
+    </ion-item>
+    <ion-card-content>
+      <ion-chip>
+        <ion-label color="primary">篮球</ion-label>
+      </ion-chip>
+      <ion-chip>
+        <ion-label color="secondary">足球</ion-label>
+      </ion-chip>
+      <ion-chip>
+        <ion-label color="tertiary">羽毛球</ion-label>
+      </ion-chip>
+      <ion-chip>
+        <ion-label color="warning">游泳</ion-label>
+      </ion-chip>
+      <ion-chip>
+        <ion-label color="light">乒乓球</ion-label>
+      </ion-chip>
+    </ion-card-content>
+  </ion-card>
+  <!-- 完善信息 -->
+  <ion-card>
+    <ion-item lines="none" button (click)="toUserInfo()">
+      <ion-icon slot="start" name="create-outline"></ion-icon>
+      <ion-text fill="outline" slot="start">完善信息</ion-text>
+    </ion-item>
+  </ion-card>
+  <!-- 消息通知 -->
+  <ion-card>
+    <ion-item lines="none" button (click)="toMessage()">
+      <ion-icon slot="start" name="notifications-outline"></ion-icon>
+      <ion-text fill="outline" slot="start">消息通知</ion-text>
+      <ion-badge color="danger" slot="end">2</ion-badge>
+    </ion-item>
+  </ion-card>
+  <!-- 联系我们 -->
+  <ion-card>
+    <ion-item lines="none" button (click)="toContact()">
+      <ion-icon slot="start" name="call-outline"></ion-icon>
+      <ion-text fill="outline" slot="start">联系我们</ion-text>
+    </ion-item>
+  </ion-card>
+</ion-content>

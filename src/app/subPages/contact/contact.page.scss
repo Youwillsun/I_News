@@ -1,0 +1,26 @@
+.title {
+    text-align: center;
+    margin-top: 10vh;
+}
+
+.content {
+    text-align: center;
+
+    p {
+        padding: 0 5vw;
+        line-height: 4vh;
+        color: #999;
+    }
+    .number {
+        .contactBtn {
+            margin: 20vh 5vw 0 5vw;
+            color: #fff;
+            text-decoration: none;
+
+            .icon {
+                margin-right: 2vw;
+            }
+        }
+    }
+
+}

@@ -3,52 +3,58 @@
   <ion-content *ngIf="isLogin">
     <div class="loginTitle">
       <h1>爱看新闻</h1>
-      <p>没有账号？<a href="javascript:void(0)" (click)="register()">点击注册！</a></p>
+      <p>没有账号？<a href="javascript:void(0)" (click)="registerPage()">点击注册！</a></p>
     </div>
-    <form>
-      <ion-list style="margin-left: -4vw !important;">
-        <ion-item lines="inset">
-          <ion-label position="floating" color="dark">账号</ion-label>
-          <ion-input required type="text"></ion-input>
-        </ion-item>
-        <ion-item lines="inset">
-          <ion-label position="floating" color="dark">密码</ion-label>
-          <ion-input required type="password"></ion-input>
-        </ion-item>
-      </ion-list>
-    </form>
+    <!-- 登录表单 -->
+    <ion-list style="margin-left: -4vw !important;">
+      <!-- 账号 -->
+      <ion-item lines="inset">
+        <ion-label position="floating" color="dark">账号</ion-label>
+        <ion-input required type="text" [(ngModel)]="loginAccount"></ion-input>
+      </ion-item>
+      <!-- 密码 -->
+      <ion-item lines="inset">
+        <ion-label position="floating" color="dark">密码</ion-label>
+        <ion-input required type="password" [(ngModel)]="loginPwd"></ion-input>
+      </ion-item>
+    </ion-list>
+    <!-- 登录按钮 -->
     <div class="loginBtn">
-      <ion-button expand="block" class="ion-no-margin" [routerLink]="[ '/tabs' ]">登录</ion-button>
+      <ion-button expand="block" class="ion-no-margin" (click)="login()">登录</ion-button>
     </div>
   </ion-content>
   <!-- 注册 -->
   <ion-content *ngIf="!isLogin">
     <div class="registerTitle">
       <h1>注册</h1>
-      <p>已有账号？<a href="javascript:void(0)" (click)="login()">点击登录！</a></p>
+      <p>已有账号？<a href="javascript:void(0)" (click)="loginPage()">点击登录！</a></p>
     </div>
-    <form>
-      <ion-list style="margin-left: -4vw !important;">
-        <ion-item lines="inset">
-          <ion-label position="floating" color="dark">昵称</ion-label>
-          <ion-input required type="text"></ion-input>
-        </ion-item>
-        <ion-item lines="inset">
-          <ion-label position="floating" color="dark">账号</ion-label>
-          <ion-input required type="text"></ion-input>
-        </ion-item>
-        <ion-item lines="inset">
-          <ion-label position="floating" color="dark">密码</ion-label>
-          <ion-input required type="password"></ion-input>
-        </ion-item>
-        <ion-item lines="inset">
-          <ion-label position="floating" color="dark">确认密码</ion-label>
-          <ion-input required type="password"></ion-input>
-        </ion-item>
-      </ion-list>
-    </form>
+    <!-- 注册表单 -->
+    <ion-list style="margin-left: -4vw !important;">
+      <!-- 昵称 -->
+      <!-- <ion-item lines="inset">
+        <ion-label position="floating" color="dark">昵称</ion-label>
+        <ion-input required type="text" [(ngModel)]="registerNickName"></ion-input>
+      </ion-item> -->
+      <!-- 手机号 -->
+      <ion-item lines="inset">
+        <ion-label position="floating" color="dark">请输入您的手机号</ion-label>
+        <ion-input required type="text" [(ngModel)]="registerAccount"></ion-input>
+      </ion-item>
+      <!-- 密码 -->
+      <ion-item lines="inset">
+        <ion-label position="floating" color="dark">请输入您的密码[6-12位]</ion-label>
+        <ion-input required type="password" [(ngModel)]="registerPwd"></ion-input>
+      </ion-item>
+      <!-- 确认密码 -->
+      <ion-item lines="inset">
+        <ion-label position="floating" color="dark">请再次确认密码</ion-label>
+        <ion-input required type="password" [(ngModel)]="registerPwdAgain"></ion-input>
+      </ion-item>
+    </ion-list>
+    <!-- 注册按钮 -->
     <div class="loginBtn">
-      <ion-button expand="block" type="submit" class="ion-no-margin">注册</ion-button>
+      <ion-button expand="block" class="ion-no-margin" (click)="register()">注册</ion-button>
     </div>
   </ion-content>
 </ion-app>

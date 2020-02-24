@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { FormsModule } from '@angular/forms'
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -20,6 +21,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     NgxEchartsModule,
+    FormsModule,
     IonicModule.forRoot()
   ],
   providers: [

@@ -22,7 +22,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     NgxEchartsModule,
     FormsModule,
-    IonicModule.forRoot()
+    IonicModule.forRoot({mode:'ios'})
   ],
   providers: [
     StatusBar,

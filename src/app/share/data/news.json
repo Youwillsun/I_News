@@ -1,0 +1,22 @@
+{
+    "status": "200",
+    "statusText": "OK",
+    "data": [
+        {
+            "id": 1,
+            "class": "国际新闻",
+            "classThumbnail":"../../../assets/newsImg/i-newsImg.jpg",
+            "title": "叙利亚局势在线",
+            "source": "新华社",
+            "date": "2020-2-20",
+            "images":[
+                {"images":"../../../assets/newsImg/i-newsImg.jpg"},
+                {"images":"../../../assets/newsImg/i-newsImg.jpg"}
+            ],
+            "intro":"叙利亚政府军于抵抗派发生激烈的交火冲突。",
+            "content":"叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。",
+            "view":300,
+            "collect":20
+        }
+    ]
+}

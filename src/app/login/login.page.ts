@@ -22,8 +22,6 @@ export class LoginPage implements OnInit {
   // 存储登录页面密码
   public loginPwd: string;
 
-  // 存储注册页面昵称
-  // public registerNickName: string;
   // 存储注册页面账号
   public registerAccount: string;
   // 存储注册页面mima:

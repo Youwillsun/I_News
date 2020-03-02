@@ -1,0 +1,32 @@
+{
+    "status": "200",
+    "statusText": "OK",
+    "data": [
+        {
+            "id": "news1",
+            "class": "国际新闻",
+            "title": "叙利亚局势在线",
+            "source": "新华社",
+            "date": "2020-2-20",
+            "content": "<p>叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。</p> <img src='../../../assets/newsImg/i-newsImg.jpg'> <p>叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。叙利亚政府军于抵抗派发生激烈的交火冲突。</p>",
+            "view": 300,
+            "collect": 20,
+            "comment": [
+                {
+                    "userId": "user1",
+                    "nickName": "小菜鸡路过",
+                    "headPhoto": "../../../assets/newsImg/i-newsImg.jpg",
+                    "content": "国外实在是太动荡了，还是老老实实呆在我们的国家里吧！",
+                    "like": 1300
+                },
+                {
+                    "userId": "user2",
+                    "nickName": "孙哥",
+                    "headPhoto": "../../../assets/newsImg/i-newsImg.jpg",
+                    "content": "国外实在是太动荡了，我也这么觉得，国内真好！",
+                    "like": 1210
+                }
+            ]
+        }
+    ]
+}

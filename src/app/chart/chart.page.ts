@@ -14,6 +14,9 @@ export class ChartPage implements OnInit {
   // 判断是否为柱状图
   public isBar: boolean;
 
+  // 标题
+  public title = "新闻统计";
+
   constructor() { }
 
   ngOnInit() {
@@ -64,12 +67,12 @@ export class ChartPage implements OnInit {
   }
 
   // 今日新闻统计
-  todayNews(){
+  todayNews() {
     this.isBar = true;
   }
 
   // 各类新闻占比
-  newsClass(){
+  newsClass() {
     this.isBar = false;
   }
 

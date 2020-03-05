@@ -8,6 +8,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
 
 import { ChartPage } from './chart.page';
 
+import { HeaderModule } from '../components/header/header.module';
+
 
 @NgModule({
   imports: [
@@ -15,6 +17,7 @@ import { ChartPage } from './chart.page';
     FormsModule,
     IonicModule,
     NgxEchartsModule,
+    HeaderModule,
     RouterModule.forChild([{ path: '', component: ChartPage }])
   ],
   declarations: [ChartPage]

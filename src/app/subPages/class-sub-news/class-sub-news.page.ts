@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { DateCompare } from 'src/app/share/class/DateCompare';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-class-sub-news',
@@ -8,15 +11,69 @@ import { Router } from '@angular/router'
 })
 export class ClassSubNewsPage implements OnInit {
 
+  // 标题
+  public title: string;
+  // 新闻类别id
+  public newsClassId: string;
+  // 存储新闻数据
+  public newsData = [];
+
   constructor(
-    public router: Router
+    public router: Router,
+    public route: ActivatedRoute,
+    public http: HttpClient,
+    public toastController: ToastController
   ) { }
 
   ngOnInit() {
+    // 标题和新闻类别id从路由中获取
+    this.route.params.subscribe((data: any) => {
+      this.title = data.name;
+      this.newsClassId = data.id;
+    });
+    // 获取数据
+    this.fetchNewsData();
   }
 
-  toNewsDetail() {
-    this.router.navigate(['/newsDetails']);
+  // 获取对应新闻类别的新闻数据
+  fetchNewsData() {
+    this.http.get<any>("../../../assets/data/news.json").subscribe((data: any) => {
+      if (data.statusText === 'OK') {
+        let res = data.data;
+        res.forEach((item: any, index: number) => {
+          // 今日及其之前的新闻，且属于这一类别
+          if (DateCompare.compare(item.date) === 'ok' && this.newsClassId === item.classId) {
+            this.newsData.push(item);
+          } else {
+            if (index + 1 === res.length) {
+              const mes = '此类新闻暂无数据！';
+              this.presentToast(mes, 'danger');
+              return false;
+            }
+          }
+        });
+      } else {
+        throw new Error('data有误');
+      }
+    }, err => {
+      throw new Error(err);
+    });
+  }
+
+  // 去新闻详情页
+  toNewsDetail(id: string) {
+    this.router.navigate(['/newsDetails', { id }]);
+  }
+
+  // ionic toast
+  async presentToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1500,
+      color: color,
+      position: 'top'
+    });
+    toast.present();
   }
 
 }

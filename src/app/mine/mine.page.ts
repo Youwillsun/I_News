@@ -9,6 +9,9 @@ import { AlertController } from '@ionic/angular';
 })
 export class MinePage implements OnInit {
 
+  // 标题
+  public title = '我的';
+
   constructor(
     public router: Router,
     public alertController: AlertController

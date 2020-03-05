@@ -1,63 +1,29 @@
 <div class="container">
   <ion-item lines="full">
     <ion-label position="floating">欢迎写下你的评论[100字以内]</ion-label>
-    <ion-textarea color="#000" spellcheck="true" maxlength="100"></ion-textarea>
+    <ion-textarea color="#000" spellcheck="true" maxlength="100" [(ngModel)]="comContent"></ion-textarea>
   </ion-item>
   <div class="sendBtnBox">
-    <ion-button fill="outline" shape="round" size="small">
-      发送
+    <ion-button fill="outline" shape="round" size="small" (click)="publishCom()">
+      发表
     </ion-button>
   </div>
   <ion-list>
-    <ion-card style="width: 93vw; margin-left: 0;">
+    <ion-card style="width: 93vw; margin-left: 0;" *ngFor="let item of comment">
       <ion-item>
         <ion-avatar>
-          <img src="../../assets/newsImg/yangshi.jpg">
+          <img [src]="item.headPhoto">
         </ion-avatar>
         <ion-label style="margin-left: 5px;">
-          <h2>流年不追忆</h2>
+          <h2>{{item.nickName}}</h2>
         </ion-label>
         <ion-label style="position: absolute; top: 0; right: 0;">
           <ion-icon name="thumbs-up-outline"></ion-icon>
-          123
+          {{item.like}}
         </ion-label>
       </ion-item>
       <ion-card-content style="padding-top: 5px; padding-bottom: 5px;">
-        <p>这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-card style="width: 93vw; margin-left: 0;">
-      <ion-item>
-        <ion-avatar>
-          <img src="../../assets/newsImg/yangshi.jpg">
-        </ion-avatar>
-        <ion-label style="margin-left: 5px;">
-          <h2>流年不追忆</h2>
-        </ion-label>
-        <ion-label style="position: absolute; top: 0; right: 0;">
-          <ion-icon name="thumbs-up-outline"></ion-icon>
-          12345
-        </ion-label>
-      </ion-item>
-      <ion-card-content style="padding-top: 5px; padding-bottom: 5px;">
-        <p>这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-card style="width: 93vw; margin-left: 0;">
-      <ion-item>
-        <ion-avatar>
-          <img src="../../assets/newsImg/yangshi.jpg">
-        </ion-avatar>
-        <ion-label style="margin-left: 5px;">
-          <h2>流年不追忆</h2>
-        </ion-label>
-        <ion-label style="position: absolute; top: 0; right: 0;">
-          <ion-icon name="thumbs-up-outline"></ion-icon>
-          123567
-        </ion-label>
-      </ion-item>
-      <ion-card-content style="padding-top: 5px; padding-bottom: 5px;">
-        <p>这是我的评论，这是我的评论，这是我的评论，这是我的评论，这是我的评论，</p>
+        <p>{{item.content}}</p>
       </ion-card-content>
     </ion-card>
   </ion-list>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { DateCompare } from 'src/app/share/class/DateCompare';
 
 @Component({
   selector: 'app-message',
@@ -7,9 +9,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessagePage implements OnInit {
 
-  constructor() { }
+  // 存储消息数据
+  public messageData = [];
+
+  constructor(
+    public http: HttpClient
+  ) { }
 
   ngOnInit() {
+    // 获取数据
+    this.fetchMessageData();
+  }
+
+  // 获取消息数据
+  fetchMessageData() {
+    this.http.get<any>("../../../assets/data/message.json").subscribe((data: any) => {
+      if (data.statusText === 'OK') {
+        let res = data.data;
+        res.forEach((item: any) => {
+          if (DateCompare.compare(item.time) === 'ok') {
+            this.messageData.push(item);
+          }
+        });
+      } else {
+        throw new Error('data有误');
+      }
+    }, err => {
+      throw new Error(err);
+    });
   }
 
 }

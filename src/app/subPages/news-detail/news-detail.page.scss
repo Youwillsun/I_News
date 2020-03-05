@@ -1,8 +1,24 @@
-.container{
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.container {
     padding: 0 3vw 0 3vw !important;
-    .BACBox{
+
+    .BACBox {
         display: flex;
         justify-content: space-between;
         font-size: 1.1rem;
     }
+
+    .newsContentBox {
+        color: #444;
+        font-size: 15px;
+        line-height: 24px;
+    }
+}
+
+ion-chip{
+    padding: 0 10px 0 10px;
 }

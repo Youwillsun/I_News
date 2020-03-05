@@ -6,14 +6,17 @@ import { IonicModule } from '@ionic/angular';
 
 import { MinePage } from './mine.page';
 
+import { HeaderModule } from '../components/header/header.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    HeaderModule,
     RouterModule.forChild([{ path: '', component: MinePage }])
   ],
   declarations: [MinePage]
 })
-export class MinePageModule {}
+export class MinePageModule { }

@@ -1,0 +1,24 @@
+{
+    "status": 200,
+    "statusText": "OK",
+    "data": [
+        {
+            "id": "news1",
+            "classId": "newsClass1",
+            "title": "韩国新冠肺炎确诊病例破5千",
+            "source": "环球时报国际",
+            "date": "2020-03-03",
+            "images": "https://s2.ax1x.com/2020/03/03/34l2He.th.jpg",
+            "intro": "韩国新增新冠肺炎确诊病例600例，其中大邱新增519例，庆北新增61例。"
+        },
+        {
+            "id": "news2",
+            "classId": "newsClass1",
+            "title": "伊朗紧急服务部负责人感染新冠病毒",
+            "source": "环球网",
+            "date": "2020-03-02",
+            "images": "https://s2.ax1x.com/2020/03/04/3oJqRe.jpg",
+            "intro": "快讯！伊朗紧急服务部负责人感染新冠病毒，伊朗议员称议会有23人感染。"
+        }
+    ]
+}

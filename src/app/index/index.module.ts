@@ -5,12 +5,14 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { IndexPage } from './index.page';
+import { HeaderModule } from '../components/header/header.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    HeaderModule,
     RouterModule.forChild([{ path: '', component: IndexPage }])
   ],
   declarations: [IndexPage]

@@ -3,20 +3,23 @@
     <ion-buttons slot="start" style="position: absolute;">
       <ion-back-button text="" icon="chevron-back-outline" color="primary"></ion-back-button>
     </ion-buttons>
-    <ion-title>政治新闻</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
-  <ion-card (click)="toNewsDetail()">
-    <div class="newsImgBox">
-      <img src="../../../assets/newsImg/yangshi.jpg" />
-    </div>
-    <ion-card-header>
-      <ion-card-subtitle>新华社：2020-2-20</ion-card-subtitle>
-      <ion-card-title>叙利亚局势在线</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      叙利亚政府军于抵抗派发生激烈的交火冲突。
-    </ion-card-content>
-  </ion-card>
+  <div *ngFor="let item of newsData">
+    <ion-card (click)="toNewsDetail(item.id)">
+      <div class="newsImgBox">
+        <img [src]="item.images" />
+      </div>
+      <ion-card-header>
+        <ion-card-subtitle>{{item.source}}：{{item.date}}</ion-card-subtitle>
+        <ion-card-title>{{item.title}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{item.intro}}
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

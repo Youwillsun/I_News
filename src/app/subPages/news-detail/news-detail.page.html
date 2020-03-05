@@ -10,48 +10,36 @@
 <ion-content>
   <div class="container">
     <!-- 标题 -->
-    <div class="newsTitleBox">
+    <div class="newsTitleBox" style="margin-bottom: 15px;">
       <ion-text>
-        <h1 class="newsTitle">这是新闻标题这是新闻标题这是新闻标题</h1>
+        <h1 class="newsTitle" style="margin-bottom: 15px;">{{newsData.title}}</h1>
         <ion-chip color="primary">
-          <ion-label>来源：新华社</ion-label>
+          <ion-label>来源：{{newsData.source}}</ion-label>
         </ion-chip>
-        <ion-chip color="primary">
-          <ion-label>时间：2020-1-9</ion-label>
+        <ion-chip color="primary" style="margin-left: 10px;">
+          <ion-label>时间：{{newsData.date}}</ion-label>
         </ion-chip>
       </ion-text>
     </div>
     <!-- 内容 -->
-    <div class="newsContentBox">
-      <p class="newsContent">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor
-        sit
-        amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic tempor. Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et
-        viverra justo commodo. Proin sodales pulvinar sic tempor. Lorem ipsum dolor sit amet, consectetur adipiscing
-        elit.
-        Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin
-        sodales pulvinar sic tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum
-        laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar sic
-        tempor.
-      </p>
+    <div class="newsContentBox" [innerHTML]="newsData.content">
     </div>
     <!-- 浏览收藏量 -->
     <div class="BACBox">
       <div class="browserNum">
         <ion-chip color="primary" outline="true">
-          <ion-icon name="heart-circle-outline"></ion-icon>
-          <ion-label>3398</ion-label>
+          <ion-icon name="eye-outline"></ion-icon>
+          <ion-label>{{newsData.view}}</ion-label>
         </ion-chip>
       </div>
       <div class="collectNum">
         <ion-chip color="primary" outline="true">
-          <ion-icon name="eye-outline"></ion-icon>
-          <ion-label>3398</ion-label>
+          <ion-icon name="heart-circle-outline"></ion-icon>
+          <ion-label>{{newsData.collect}}</ion-label>
         </ion-chip>
       </div>
     </div>
     <!-- 评论组件 -->
-    <app-comment></app-comment>
+    <app-comment [comment]="newsData.comment"></app-comment>
   </div>
 </ion-content>

@@ -1,11 +1,7 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title style="text-align: center;">新闻统计</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [title]="title"></app-header>
 
 <ion-content>
-<ion-app>
+  <ion-app>
     <!-- 新闻图表chip -->
     <ion-item lines="full">
       <ion-chip color="primary">
@@ -28,7 +24,7 @@
         <div echarts [options]="pieOption"></div>
       </ion-card-content>
     </ion-card>
-</ion-app>
+  </ion-app>
 </ion-content>
 
 <ion-footer>

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NewsDetailPageRoutingModule } from './news-detail-routing.module';
 
 import { NewsDetailPage } from './news-detail.page';
-import { CommentModule } from '../../components/comment/comment.module'
+import { CommentModule } from 'src/app/components/comment/comment.module';
 
 @NgModule({
   imports: [

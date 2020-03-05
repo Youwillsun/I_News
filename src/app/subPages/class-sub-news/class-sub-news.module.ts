@@ -17,4 +17,4 @@ import { ClassSubNewsPage } from './class-sub-news.page';
   ],
   declarations: [ClassSubNewsPage]
 })
-export class ClassSubNewsPageModule {}
+export class ClassSubNewsPageModule { }

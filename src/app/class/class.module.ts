@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 
 import { ClassPage } from './class.page';
 
+import { HeaderModule } from '../components/header/header.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    HeaderModule,
     RouterModule.forChild([{ path: '', component: ClassPage }])
   ],
   declarations: [ClassPage]
 })
-export class ClassPageModule {}
+export class ClassPageModule { }

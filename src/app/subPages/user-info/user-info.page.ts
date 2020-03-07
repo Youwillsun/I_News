@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonDataService } from '../../share/service/common-data.service';
+import { environment } from 'src/environments/environment';
+import { VariableService } from 'src/app/share/service/variable.service';
 
 @Component({
   selector: 'app-user-info',
@@ -30,16 +33,74 @@ export class UserInfoPage implements OnInit {
   // 个性签名
   public signature: string;
 
+
+  // 设定个人信息模板
+  public UserInfomation = {
+    Id: Number(window.localStorage.getItem('userId')),
+    name: '',
+    age: 0,
+    phone: '',
+    nickName: '',
+    vipName: '',
+    country: '',
+    province: '',
+    city: '',
+    county: ''
+  }
+
   constructor(
+    public http: HttpClient,
     public alertController: AlertController,
     public toastController: ToastController,
-    public commonData: CommonDataService
+    public commonData: CommonDataService,
+    public changeJudge: VariableService
   ) { }
 
   ngOnInit() {
     // 调用修改出生日期函数
     this.changeBirthday();
+    // 调用获取默认值函数
+    this.defaultValue();
   }
+
+  // 获取默认值
+  public defaultValue(){
+    this.http.get<any>(environment.baseUrl+'ApiRoot/UserInfo/GetUserInfo?id='+window.localStorage.getItem('regId')).subscribe((data:any)=>{
+      if(data.Status === 'ok'){
+        // 遍历返回过来的数据，同时修改数据模板
+        data.List.forEach((item:any) => {
+          // 名字
+          this.name = item.name;
+          this.UserInfomation.name = item.name;
+          // 手机
+          this.phone = item.phone;
+          this.UserInfomation.phone = item.phone;
+          // 昵称
+          this.nickName = item.nickName;
+          this.UserInfomation.nickName = item.nickName;
+          // QQ
+          this.qqNumber = item.vipName;
+          this.UserInfomation.vipName = item.vipName;
+          // 微信
+          this.weChatNumber = item.country;
+          this.UserInfomation.country = item.country;
+          // 个性标签
+          this.label = this.commonData.matchLabel(item.province);
+          this.UserInfomation.province = item.province;
+          // 个人签名
+          this.signature = item.city;
+          this.UserInfomation.city = item.city;
+          // 出生日期
+          this.birthday = item.county;
+          this.UserInfomation.county = item.county;
+        });
+      } else {
+        throw new Error('data有误');
+      }
+    },err=>{
+      throw new Error(err);
+    });
+  };
 
   // 修改昵称
   async changeNickName() {
@@ -63,9 +124,18 @@ export class UserInfoPage implements OnInit {
           text: '确认',
           handler: (data: any) => {
             if (data.nickName) {
-              // 修改页面中的值
-              this.nickName = data.nickName;
+              // 修改信息模板中数据
+              this.UserInfomation.nickName = data.nickName;
               // 向后台发送数据
+              this.sendUserMsg(this.UserInfomation);
+              this.changeJudge.infoCgJudge.subscribe((value: string) => {
+                if (value === 'ok') {
+                  // 修改页面中的值
+                  this.nickName = data.nickName;
+                } else {
+                  this.presentToast('修改失败！', 'danger');
+                }
+              });
             } else {
               const message = "昵称不能为空，请检查！";
               this.presentToast(message, 'danger');
@@ -102,9 +172,18 @@ export class UserInfoPage implements OnInit {
           text: '确认',
           handler: (data: any) => {
             if (data.name) {
-              // 修改页面中的数据
-              this.name = data.name;
+              // 修改信息模板的值
+              this.UserInfomation.name = data.name;
               // 向后台发送数据
+              this.sendUserMsg(this.UserInfomation);
+              this.changeJudge.infoCgJudge.subscribe((value: string) => {
+                if (value === 'ok') {
+                  // 修改页面中的数据
+                  this.name = data.name;
+                } else {
+                  this.presentToast('修改失败！', 'danger');
+                }
+              });
             } else {
               const message = "姓名不能为空，请检查！";
               this.presentToast(message, 'danger');
@@ -143,9 +222,18 @@ export class UserInfoPage implements OnInit {
             const phoneRegExp = new RegExp('^[0-9]{11}$');
             if (data.phone) {
               if (phoneRegExp.test(data.phone)) {
-                this.phone = data.phone;
+                // 修改信息模板的值
+                this.UserInfomation.phone = data.phone;
                 // 向后台发送数据
-
+                this.sendUserMsg(this.UserInfomation);
+                this.changeJudge.infoCgJudge.subscribe((value: string) => {
+                  if (value === 'ok') {
+                    // 修改页面中的数据
+                    this.phone = data.phone;
+                  } else {
+                    this.presentToast('修改失败！', 'danger');
+                  }
+                });
               } else {
                 const message = "手机号格式有误，请检查！";
                 this.presentToast(message, 'danger');
@@ -187,9 +275,18 @@ export class UserInfoPage implements OnInit {
             const qqRegExp = new RegExp('^[1-9][0-9]{4,9}$');
             if (data.QQ) {
               if (qqRegExp.test(data.QQ)) {
-                this.qqNumber = data.QQ;
+                // 修改信息模板的值
+                this.UserInfomation.vipName = data.QQ;
                 // 向后台发送数据
-
+                this.sendUserMsg(this.UserInfomation);
+                this.changeJudge.infoCgJudge.subscribe((value: string) => {
+                  if (value === 'ok') {
+                    // 修改页面中的数据
+                    this.qqNumber = data.QQ;
+                  } else {
+                    this.presentToast('修改失败！', 'danger');
+                  }
+                });
               } else {
                 const message = "QQ号格式有误，请检查！";
                 this.presentToast(message, 'danger');
@@ -231,9 +328,18 @@ export class UserInfoPage implements OnInit {
             const weChatRegExp = new RegExp('^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}$');
             if (data.weChat) {
               if (weChatRegExp.test(data.weChat)) {
-                this.weChatNumber = data.weChat;
+                // 修改信息模板的值
+                this.UserInfomation.country = data.weChat;
                 // 向后台发送数据
-
+                this.sendUserMsg(this.UserInfomation);
+                this.changeJudge.infoCgJudge.subscribe((value: string) => {
+                  if (value === 'ok') {
+                    // 修改页面中的数据
+                    this.weChatNumber = data.weChat;
+                  } else {
+                    this.presentToast('修改失败！', 'danger');
+                  }
+                });
               } else {
                 const message = "微信号格式有误，请检查！";
                 this.presentToast(message, 'danger');
@@ -259,8 +365,18 @@ export class UserInfoPage implements OnInit {
       }, {
         text: '确认',
         handler: (data: any) => {
-          // 修改页面中的值
-          this.birthday = `${data.year.text}-${data.month.text}-${data.day.text}`;
+          // 修改信息模板的值
+          this.UserInfomation.county = `${data.year.text}-${data.month.text}-${data.day.text}`;
+          // 向后台发送数据
+          this.sendUserMsg(this.UserInfomation);
+          this.changeJudge.infoCgJudge.subscribe((value: string) => {
+            if (value === 'ok') {
+              // 修改页面中的值
+              this.birthday = `${data.year.text}-${data.month.text}-${data.day.text}`;
+            } else {
+              this.presentToast('修改失败！', 'danger');
+            }
+          });
         }
       }]
     }
@@ -305,18 +421,27 @@ export class UserInfoPage implements OnInit {
           text: '确认',
           handler: (data: any) => {
             if (data.length !== 0) {
-              // 清空原有的个性标签
-              this.label = [];
-              // 修改页面中的值
-              for (let j = 0; j < data.length; j++) {
-                this.commonData.labelArr.forEach((item: any) => {
-                  if (data[j] === item.tag) {
-                    this.label.push(item);
-                  }
-                });
-              }
               // 向后台发送
               this.labelCopy = data.join(',');
+              // 修改信息模板的值
+              this.UserInfomation.province = this.labelCopy;
+              this.sendUserMsg(this.UserInfomation);
+              this.changeJudge.infoCgJudge.subscribe((value: string) => {
+                if (value === 'ok') {
+                  // 清空原有的个性标签
+                  this.label = [];
+                  // 修改页面中的值
+                  for (let j = 0; j < data.length; j++) {
+                    this.commonData.labelArr.forEach((item: any) => {
+                      if (data[j] === item.tag) {
+                        this.label.push(item);
+                      }
+                    });
+                  }
+                } else {
+                  this.presentToast('修改失败！', 'danger');
+                }
+              });
             } else {
               const message = "请选择至少一个个性标签！";
               this.presentToast(message, 'danger');
@@ -351,8 +476,18 @@ export class UserInfoPage implements OnInit {
           text: '确认',
           handler: (data: any) => {
             if (data.signature) {
-              // 修改页面中的值
-              this.signature = data.signature;
+              // 修改信息模板的值
+              this.UserInfomation.city = data.signature;
+              // 向后台发送数据
+              this.sendUserMsg(this.UserInfomation);
+              this.changeJudge.infoCgJudge.subscribe((value: string) => {
+                if (value === 'ok') {
+                  // 修改页面中的值
+                  this.signature = data.signature;
+                } else {
+                  this.presentToast('修改失败！', 'danger');
+                }
+              });
             } else {
               const message = "个性签名不能为空，请检查！";
               this.presentToast(message, 'danger');
@@ -374,6 +509,22 @@ export class UserInfoPage implements OnInit {
       position: 'top'
     });
     toast.present();
+  }
+
+  // 向后台发送信息
+  sendUserMsg(userInfo: any) {
+    // 定义请求头
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    // 发送请求
+    this.http.post<any>(environment.baseUrl + 'ApiRoot/UserInfo/UpdateInfor', JSON.stringify(userInfo), httpOptions).subscribe((data: any) => {
+      if (data.Status === 'ok') {
+        this.changeJudge.infoCgJudge.emit('ok');
+      } else {
+        this.changeJudge.infoCgJudge.emit('no');
+      }
+    }, err => {
+      throw new Error(err);
+    });
   }
 
 }

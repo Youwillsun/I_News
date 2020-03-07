@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-chart',
@@ -17,53 +18,15 @@ export class ChartPage implements OnInit {
   // 标题
   public title = "新闻统计";
 
-  constructor() { }
+  constructor(
+    public http: HttpClient
+  ) { }
 
   ngOnInit() {
     // 默认显示柱状图
     this.isBar = true;
-    // 柱状图配置
-    this.barOption = {
-      legend: {
-        data: ['销量']
-      },
-      xAxis: {
-        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-      },
-      yAxis: {},
-      series: [{
-        name: '销量',
-        type: 'bar',
-        data: [5, 20, 36, 10, 10, 20]
-      }]
-    }
-    // 饼图配置
-    this.pieOption = {
-      tooltip: {
-        trigger: 'item',
-        formatter: '{a} <br/>{b} : {c} ({d}%)'
-      },
-      legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-      },
-      series: [
-        {
-          name: '访问来源',
-          type: 'pie',
-          radius: '55%',
-          center: ['50%', '60%'],
-          data: [
-            { value: 335, name: '直接访问' },
-            { value: 310, name: '邮件营销' },
-            { value: 234, name: '联盟广告' },
-            { value: 135, name: '视频广告' },
-            { value: 1548, name: '搜索引擎' }
-          ]
-        }
-      ]
-    }
+    // 加载数据
+    this.chartData();
   }
 
   // 今日新闻统计
@@ -74,6 +37,100 @@ export class ChartPage implements OnInit {
   // 各类新闻占比
   newsClass() {
     this.isBar = false;
+  }
+
+  // 今日新闻柱状图数据
+  chartData() {
+    // 拿到news-class数据
+    this.http.get<any>("../../assets/data/news-class.json").subscribe((data: any) => {
+      let newsClassData = data.data;
+      // 拿到news数据
+      this.http.get<any>("../../assets/data/news.json").subscribe((res: any) => {
+        let newsData = res.data;
+
+        // 存储newclass的名称【给柱状图，饼图用】
+        let newsClassName: string[] = [];
+        // 存储此类新闻的数量【给柱状图】
+        let newClassNumber: number[] = [];
+        // 存储新闻数量和此类新闻名称【给饼图】
+        let newsNameANumber: any[] = [];
+        newsClassData.forEach((item: any, index: number) => {
+          // 设置一个初始值
+          let count = 0;
+          newsClassName.push(item.class.substring(0,2));
+          newsData.forEach((el: any, num: number) => {
+            if (item.id === el.classId) {
+              count++;
+            }
+            if (num + 1 === newsData.length) {
+              newClassNumber.push(count);
+              newsNameANumber.push({ value: count, name: item.class.substring(0,2) });
+            }
+          });
+          if (index + 1 === newsClassData.length) {
+            // 柱状图配置
+            this.barOption = {
+              tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                  type: 'shadow'
+                }
+              },
+              legend: {
+                data: ['数量']
+              },
+              grid: {
+                left: '3%',
+                right: '12%', ///   调整大小
+                bottom: '3%',
+                containLabel: true
+              },
+              xAxis: {
+                data: newsClassName
+              },
+              yAxis: {
+                type: 'value'
+              },
+              series: [{
+                name: '数量',
+                type: 'bar',
+                data: newClassNumber
+              }]
+            }
+            // 饼图配置
+            this.pieOption = {
+              tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
+              },
+              grid: {
+                left: '3%',
+                right: '12%', ///   调整大小
+                bottom: '3%',
+                containLabel: true
+              },
+              legend: {
+                left: 'left',
+                data: newsClassName
+              },
+              series: [
+                {
+                  name: '各类新闻占比',
+                  type: 'pie',
+                  radius: '55%',
+                  center: ['50%', '60%'],
+                  data: newsNameANumber
+                }
+              ]
+            }
+          }
+        });
+      }, err => {
+        throw new Error(err);
+      });
+    }, err => {
+      throw new Error(err);
+    });
   }
 
 }

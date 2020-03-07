@@ -19,4 +19,27 @@ export class CommonDataService {
   ]
 
   constructor() { }
+
+  /**
+   * 个人标签匹配函数
+   * @param str 用户传过来的个性标签字符串 '运动,看电影'
+   */
+  public matchLabel(str: string) {
+    // 定义数组，拼接成labelArr形式
+    let labelResult = [];
+    if (str.length !== 0) {
+      // 把字符串分割成数组
+      let label = str.split(',');
+      label.forEach((item: string, index: number) => {
+        this.labelArr.forEach((el: any) => {
+          if (item === el.tag) {
+            labelResult.push(el);
+          }
+        });
+      });
+      return labelResult;
+    } else {
+      return labelResult;
+    }
+  }
 }

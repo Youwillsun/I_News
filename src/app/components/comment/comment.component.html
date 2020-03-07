@@ -17,7 +17,7 @@
         <ion-label style="margin-left: 5px;">
           <h2>{{item.nickName}}</h2>
         </ion-label>
-        <ion-label style="position: absolute; top: 0; right: 0;">
+        <ion-label style="position: absolute; top: 0; right: 0;" (click)="likeEvent(item.like)">
           <ion-icon name="thumbs-up-outline"></ion-icon>
           {{item.like}}
         </ion-label>

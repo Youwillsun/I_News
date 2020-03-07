@@ -6,29 +6,17 @@
     <ion-item>
       <ion-thumbnail slot="start">
         <ion-avatar>
-          <img src="../../assets/newsImg/yangshi.jpg">
+          <img src="https://s2.ax1x.com/2020/03/03/34B4cF.png">
         </ion-avatar>
       </ion-thumbnail>
       <ion-label>
-        <h2>流年不追忆</h2>
-        <p>这是我的个人简介，这是我的个人简介这是我的个人简介，这是我的个人简介。。。</p>
+        <h2>{{nickName}}</h2>
+        <p>{{userSign}}</p>
       </ion-label>
     </ion-item>
     <ion-card-content>
-      <ion-chip>
-        <ion-label color="primary">篮球</ion-label>
-      </ion-chip>
-      <ion-chip>
-        <ion-label color="secondary">足球</ion-label>
-      </ion-chip>
-      <ion-chip>
-        <ion-label color="tertiary">羽毛球</ion-label>
-      </ion-chip>
-      <ion-chip>
-        <ion-label color="warning">游泳</ion-label>
-      </ion-chip>
-      <ion-chip>
-        <ion-label color="light">乒乓球</ion-label>
+      <ion-chip *ngFor="let item of userTag">
+        <ion-label [color]="item.color">{{item.tag}}</ion-label>
       </ion-chip>
     </ion-card-content>
   </ion-card>
@@ -44,7 +32,7 @@
     <ion-item lines="none" button (click)="toMessage()">
       <ion-icon slot="start" name="notifications-outline"></ion-icon>
       <ion-text fill="outline" slot="start">消息通知</ion-text>
-      <ion-badge color="danger" slot="end">2</ion-badge>
+      <ion-badge color="danger" slot="end">{{msgNum}}</ion-badge>
     </ion-item>
   </ion-card>
   <!-- 联系我们 -->

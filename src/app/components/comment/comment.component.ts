@@ -19,7 +19,15 @@ export class CommentComponent implements OnInit {
 
   // 发表评论
   public publishCom() {
-    console.log(this.comment);
+    // 获取昵称
+    let nickName = window.localStorage.getItem('nickName');
+    console.log(nickName);
+    this.comment.unshift({ userId: window.localStorage.getItem('userId'), nickName: nickName === null || undefined ? '暂无' : nickName, headPhoto: "https://s2.ax1x.com/2020/03/03/34B4cF.png", content: this.comContent, like: 0 });
+  }
+
+  // 点赞
+  likeEvent(num: number) {
+    console.log(num);
   }
 
 }

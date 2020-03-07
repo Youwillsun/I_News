@@ -7,6 +7,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 
 // 引入加解密算法
 import { INEncrypt } from '../share/class/INEncrypt'
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +30,9 @@ export class LoginPage implements OnInit {
   public registerPwd: string;
   // 存储注册页面确认密码
   public registerPwdAgain: string;
+
+  // 存储用户id
+  public userId: string;
 
   constructor(
     public router: Router,
@@ -76,14 +80,20 @@ export class LoginPage implements OnInit {
       // 向后台发送账号密码验证成功则登录
       // console.log(this.loginAccount, this.loginPwd);
       const headerOption = { headers: new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8' }) };
-      this.http.post<any>('http://www.barteam.cn:1010/ApiRoot/Login/Login', JSON.stringify({ Account: this.loginAccount, Pwd: this.loginPwd }), headerOption).subscribe((data: any) => {
+      this.http.post<any>(environment.baseUrl+'ApiRoot/Login/Login', JSON.stringify({ Account: this.loginAccount, Pwd: this.loginPwd }), headerOption).subscribe((data: any) => {
         if (data.Status === 'ok') {
+          // 用户id
+          data.List.forEach((item: any) => {
+            this.userId = item.Id;
+          });
           this.presentToast(data.Mess, 'success');
           // 登录成功消失，进入首页
           setTimeout(() => {
             // 成功登录 在本地存储中存储账号密码
             window.localStorage.setItem('account', INEncrypt.basicEncrypt(this.loginAccount));
             window.localStorage.setItem('password', INEncrypt.basicEncrypt(this.loginPwd));
+            // 存储userif
+            window.localStorage.setItem('regId',this.userId);
             // 跳转到首页
             this.router.navigate(['/tabs']);
           }, 1500);
@@ -116,7 +126,7 @@ export class LoginPage implements OnInit {
             Account: this.registerAccount,
             Pwd: this.registerPwdAgain
           };
-          this.http.post<any>('http://www.barteam.cn:1010/ApiRoot/Login/RegisterSomeone', JSON.stringify(registerInfo), header).subscribe((data: any) => {
+          this.http.post<any>(environment.baseUrl+'ApiRoot/Login/RegisterSomeone', JSON.stringify(registerInfo), header).subscribe((data: any) => {
             if (data.Status === 'ok') {
               this.presentToast(data.Mess, 'success');
               // 注册成功显示登录页面

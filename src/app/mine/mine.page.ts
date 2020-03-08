@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
-import { DateCompare } from '../share/class/DateCompare';
+import { DateMethod } from '../share/class/DateMethod';
 import { CommonDataService } from '../share/service/common-data.service';
 import { environment } from 'src/environments/environment';
 
@@ -98,7 +98,7 @@ export class MinePage implements OnInit {
         // 定义初始值
         let count = 0;
         res.forEach((item: any, index: number) => {
-          if (DateCompare.compare(item.time) === 'ok') {
+          if (DateMethod.compare(item.time) === 'ok') {
             count++;
           }
           if (index + 1 === res.length) {

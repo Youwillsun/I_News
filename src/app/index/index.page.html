@@ -3,7 +3,7 @@
 <ion-content>
   <div *ngFor="let item of newsData">
     <ion-card (click)="toNewsDetail(item.id)">
-      <div class="newsImgBox">
+      <div class="newsImgBox" *ngIf="item.images">
         <img [src]="item.images" />
       </div>
       <ion-card-header>

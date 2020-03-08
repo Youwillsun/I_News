@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { DateCompare } from '../share/class/DateCompare';
+import { DateMethod } from '../share/class/DateMethod';
 
 @Component({
   selector: 'app-index',
@@ -30,10 +30,15 @@ export class IndexPage implements OnInit {
     this.http.get('../../assets/data/news.json').subscribe((data: any) => {
       if (data.statusText === 'OK') {
         let result = data.data;
-        result.forEach((item: any) => {
+        result.forEach((item: any, index: number) => {
           // 调用日期比较函数，值选择当前日期及其之前的新闻
-          if (DateCompare.compare(item.date) === 'ok') {
+          if (DateMethod.compare(item.date) === 'ok') {
             this.newsData.push(item);
+          }
+
+          if (index + 1 === result.length){
+            // 最后一次循环结束，对数组进行排序
+            DateMethod.dateSort(this.newsData,'date','rev')
           }
         });
       } else {

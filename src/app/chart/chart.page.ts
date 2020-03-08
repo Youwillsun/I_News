@@ -74,15 +74,17 @@ export class ChartPage implements OnInit {
                 trigger: 'axis',
                 axisPointer: {
                   type: 'shadow'
-                }
+                },
+                formatter: '{a} <br/>{b} : {c}个'
               },
               legend: {
-                data: ['数量']
+                data: ['新闻数量']
               },
               grid: {
                 left: '3%',
-                right: '12%', ///   调整大小
-                bottom: '3%',
+                top: '10%',
+                right: '3%', ///   调整大小
+                bottom: '10%',
                 containLabel: true
               },
               xAxis: {
@@ -92,7 +94,7 @@ export class ChartPage implements OnInit {
                 type: 'value'
               },
               series: [{
-                name: '数量',
+                name: '新闻数量',
                 type: 'bar',
                 data: newClassNumber
               }]
@@ -101,13 +103,7 @@ export class ChartPage implements OnInit {
             this.pieOption = {
               tooltip: {
                 trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)'
-              },
-              grid: {
-                left: '3%',
-                right: '12%', ///   调整大小
-                bottom: '3%',
-                containLabel: true
+                formatter: '{a} <br/>{b} : {c}个({d}%)'
               },
               legend: {
                 left: 'left',
@@ -115,10 +111,10 @@ export class ChartPage implements OnInit {
               },
               series: [
                 {
-                  name: '各类新闻占比',
+                  name: '新闻占比',
                   type: 'pie',
                   radius: '55%',
-                  center: ['50%', '60%'],
+                  center: ['50%', '55%'],
                   data: newsNameANumber
                 }
               ]

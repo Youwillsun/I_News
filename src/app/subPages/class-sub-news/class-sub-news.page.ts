@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { DateCompare } from 'src/app/share/class/DateCompare';
+import { DateMethod } from 'src/app/share/class/DateMethod';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -42,13 +42,21 @@ export class ClassSubNewsPage implements OnInit {
         let res = data.data;
         res.forEach((item: any, index: number) => {
           // 今日及其之前的新闻，且属于这一类别
-          if (DateCompare.compare(item.date) === 'ok' && this.newsClassId === item.classId) {
+          if (DateMethod.compare(item.date) === 'ok' && this.newsClassId === item.classId) {
             this.newsData.push(item);
-          } else {
-            if (index + 1 === res.length) {
+          }
+          // 如果是最后一次循环
+          if (index + 1 === res.length) {
+            // 如果这一类别新闻数组为空
+            if (this.newsData.length === 0) {
               const mes = '此类新闻暂无数据！';
               this.presentToast(mes, 'danger');
+              // 路由回分类页面
+              this.router.navigate(['/tabs/class']);
               return false;
+            } else {
+              // 对此数组进行排序
+              DateMethod.dateSort(this.newsData,'date','rev');
             }
           }
         });

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DateCompare } from 'src/app/share/class/DateCompare';
+import { DateMethod } from 'src/app/share/class/DateMethod';
 
 @Component({
   selector: 'app-message',
@@ -27,7 +27,7 @@ export class MessagePage implements OnInit {
       if (data.statusText === 'OK') {
         let res = data.data;
         res.forEach((item: any) => {
-          if (DateCompare.compare(item.time) === 'ok') {
+          if (DateMethod.compare(item.time) === 'ok') {
             this.messageData.push(item);
           }
         });

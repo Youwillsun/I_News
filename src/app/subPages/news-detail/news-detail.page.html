@@ -29,13 +29,13 @@
       <div class="browserNum">
         <ion-chip color="primary" outline="true">
           <ion-icon name="eye-outline"></ion-icon>
-          <ion-label>{{newsData.view}}</ion-label>
+          <ion-label style="margin-left:5px" #viewNum>{{newsData.view}}</ion-label>
         </ion-chip>
       </div>
       <div class="collectNum">
-        <ion-chip color="primary" outline="true">
-          <ion-icon name="heart-circle-outline"></ion-icon>
-          <ion-label>{{newsData.collect}}</ion-label>
+        <ion-chip color="primary" outline="true" (click)="collectNews()">
+          <ion-icon name="heart-circle-outline" #collectIcon></ion-icon>
+          <ion-label style="margin-left:5px" #collect_number>{{newsData.collect}}</ion-label>
         </ion-chip>
       </div>
     </div>

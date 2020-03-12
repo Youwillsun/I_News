@@ -17,9 +17,9 @@
         <ion-label style="margin-left: 5px;">
           <h2>{{item.nickName}}</h2>
         </ion-label>
-        <ion-label style="position: absolute; top: 0; right: 0;" (click)="likeEvent(item.like)">
-          <ion-icon name="thumbs-up-outline"></ion-icon>
-          {{item.like}}
+        <ion-label style="position: absolute; top: 0; right: 0;" (click)="likeEvent()">
+          <ion-icon name="thumbs-up-outline" #likeIcon></ion-icon>
+          <ion-text #likeNum>{{item.like}}</ion-text>
         </ion-label>
       </ion-item>
       <ion-card-content style="padding-top: 5px; padding-bottom: 5px;">

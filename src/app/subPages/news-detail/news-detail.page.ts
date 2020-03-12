@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,6 +8,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./news-detail.page.scss'],
 })
 export class NewsDetailPage implements OnInit {
+
+  // 收藏量
+  @ViewChild('collect_number', { static: false }) collectNumber: any;
+  // 收藏图标
+  @ViewChild('collectIcon', { static: false }) collectIcon: any;
 
   // 存储newsId
   public newsId: string;
@@ -44,6 +49,23 @@ export class NewsDetailPage implements OnInit {
     }, err => {
       throw new Error(err);
     });
+  }
+
+  // 点击收藏
+  collectNews() {
+    // 获取dom元素
+    let colNum = Number(this.collectNumber.el.innerText);
+    // 如果没有点过
+    if (this.collectIcon.name === 'heart-circle-outline') {
+      colNum = colNum + 1;    // 改变收藏图标
+      this.collectIcon.name = 'heart-circle';
+    } else {
+      colNum = colNum - 1;    // 改变收藏图标
+      this.collectIcon.name = 'heart-circle-outline';
+    }
+    // 更改收藏量
+    this.collectNumber.el.textContent = String(colNum);
+
   }
 
 }

@@ -39,7 +39,7 @@ export class ChartPage implements OnInit {
     this.isBar = false;
   }
 
-  // 今日新闻柱状图数据
+  // Echarts图数据
   chartData() {
     // 拿到news-class数据
     this.http.get<any>("../../assets/data/news-class.json").subscribe((data: any) => {
@@ -57,14 +57,14 @@ export class ChartPage implements OnInit {
         newsClassData.forEach((item: any, index: number) => {
           // 设置一个初始值
           let count = 0;
-          newsClassName.push(item.class.substring(0,2));
+          newsClassName.push(item.class.substring(0, 2));
           newsData.forEach((el: any, num: number) => {
             if (item.id === el.classId) {
               count++;
             }
             if (num + 1 === newsData.length) {
               newClassNumber.push(count);
-              newsNameANumber.push({ value: count, name: item.class.substring(0,2) });
+              newsNameANumber.push({ value: count, name: item.class.substring(0, 2) });
             }
           });
           if (index + 1 === newsClassData.length) {
@@ -97,6 +97,13 @@ export class ChartPage implements OnInit {
                 name: '新闻数量',
                 type: 'bar',
                 data: newClassNumber
+              }, {
+                name: '新闻数量',
+                type: 'line',
+                data: newClassNumber,
+                lineStyle:{
+                  color:'#FF9B00'
+                }
               }]
             }
             // 饼图配置

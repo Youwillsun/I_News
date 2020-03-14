@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { ClassSubNewsPageRoutingModule } from './class-sub-news-routing.module';
 
 import { ClassSubNewsPage } from './class-sub-news.page';
+import { HeaderModule } from 'src/app/components/header/header.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    HeaderModule,
     ClassSubNewsPageRoutingModule
   ],
   declarations: [ClassSubNewsPage]

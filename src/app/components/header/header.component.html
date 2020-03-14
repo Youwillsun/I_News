@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title style="text-align: center;">{{title}}</ion-title>
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start" style="position: absolute;" *ngIf="backButton" (click)="back()">
+      <ion-icon slot="icon-only" name="chevron-back-outline" color="primary" size="large"></ion-icon>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>

@@ -12,6 +12,9 @@ import { VariableService } from 'src/app/share/service/variable.service';
 })
 export class UserInfoPage implements OnInit {
 
+  public title:string = '我的信息';
+  public backButton: boolean = true;
+
   // ionic日期组件配置
   public dateOptions: any;
 

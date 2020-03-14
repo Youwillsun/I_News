@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactPage implements OnInit {
 
+  public title: string = '联系我们';
+  public backButton:boolean = true;
+
   constructor() { }
 
   ngOnInit() {

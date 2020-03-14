@@ -13,6 +13,7 @@ export class ClassSubNewsPage implements OnInit {
 
   // 标题
   public title: string;
+  public backButton:boolean = true;
   // 新闻类别id
   public newsClassId: string;
   // 存储新闻数据

@@ -8,6 +8,7 @@ import { NewsDetailPageRoutingModule } from './news-detail-routing.module';
 
 import { NewsDetailPage } from './news-detail.page';
 import { CommentModule } from 'src/app/components/comment/comment.module';
+import { HeaderModule } from 'src/app/components/header/header.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { CommentModule } from 'src/app/components/comment/comment.module';
     FormsModule,
     IonicModule,
     NewsDetailPageRoutingModule,
-    CommentModule
+    CommentModule,
+    HeaderModule
   ],
   declarations: [NewsDetailPage]
 })

@@ -9,6 +9,9 @@ import { DateMethod } from 'src/app/share/class/DateMethod';
 })
 export class MessagePage implements OnInit {
 
+  public title:string = '消息通知';
+  public backButton: boolean = true;
+
   // 存储消息数据
   public messageData = [];
 

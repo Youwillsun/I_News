@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonDataService } from '../../share/service/common-data.service';
 import { environment } from 'src/environments/environment';
 import { VariableService } from 'src/app/share/service/variable.service';
+import { IonicService } from 'src/app/share/service/ionic.service';
 
 @Component({
   selector: 'app-user-info',
@@ -54,7 +55,7 @@ export class UserInfoPage implements OnInit {
   constructor(
     public http: HttpClient,
     public alertController: AlertController,
-    public toastController: ToastController,
+    public ionic: IonicService,
     public commonData: CommonDataService,
     public changeJudge: VariableService
   ) { }
@@ -136,12 +137,11 @@ export class UserInfoPage implements OnInit {
                   // 修改页面中的值
                   this.nickName = data.nickName;
                 } else {
-                  this.presentToast('修改失败！', 'danger');
+                  this.ionic.Toast('修改失败！', 'danger',"top",1000);
                 }
               });
             } else {
-              const message = "昵称不能为空，请检查！";
-              this.presentToast(message, 'danger');
+              this.ionic.Toast("昵称不能为空，请检查！", 'danger',"top",1000);
               return false;
             }
 
@@ -184,12 +184,11 @@ export class UserInfoPage implements OnInit {
                   // 修改页面中的数据
                   this.name = data.name;
                 } else {
-                  this.presentToast('修改失败！', 'danger');
+                  this.ionic.Toast('修改失败！', 'danger',"top",1000);
                 }
               });
             } else {
-              const message = "姓名不能为空，请检查！";
-              this.presentToast(message, 'danger');
+              this.ionic.Toast("姓名不能为空，请检查！", 'danger',"top",1000);
               return false;
             }
 
@@ -234,17 +233,15 @@ export class UserInfoPage implements OnInit {
                     // 修改页面中的数据
                     this.phone = data.phone;
                   } else {
-                    this.presentToast('修改失败！', 'danger');
+                    this.ionic.Toast('修改失败！', 'danger',"top",1000);
                   }
                 });
               } else {
-                const message = "手机号格式有误，请检查！";
-                this.presentToast(message, 'danger');
+                this.ionic.Toast("手机号格式有误，请检查！", 'danger',"top",1000);
                 return false;
               }
             } else {
-              const message = "手机号为空，请检查！";
-              this.presentToast(message, 'danger');
+              this.ionic.Toast("手机号为空，请检查！", 'danger',"top",1000);
               return false;
             }
           }
@@ -287,17 +284,15 @@ export class UserInfoPage implements OnInit {
                     // 修改页面中的数据
                     this.qqNumber = data.QQ;
                   } else {
-                    this.presentToast('修改失败！', 'danger');
+                    this.ionic.Toast('修改失败！', 'danger','top',1000);
                   }
                 });
               } else {
-                const message = "QQ号格式有误，请检查！";
-                this.presentToast(message, 'danger');
+                this.ionic.Toast("QQ号格式有误，请检查！", 'danger','top',1000);
                 return false;
               }
             } else {
-              const message = "QQ号为空，请检查！";
-              this.presentToast(message, 'danger');
+              this.ionic.Toast("QQ号为空，请检查！", 'danger','top',1000);
               return false;
             }
           }
@@ -340,17 +335,15 @@ export class UserInfoPage implements OnInit {
                     // 修改页面中的数据
                     this.weChatNumber = data.weChat;
                   } else {
-                    this.presentToast('修改失败！', 'danger');
+                    this.ionic.Toast('修改失败！', 'danger',"top",1000);
                   }
                 });
               } else {
-                const message = "微信号格式有误，请检查！";
-                this.presentToast(message, 'danger');
+                this.ionic.Toast("微信号格式有误，请检查！", 'danger',"top",1000);
                 return false;
               }
             } else {
-              const message = "微信号为空，请检查！";
-              this.presentToast(message, 'danger');
+              this.ionic.Toast("微信号为空，请检查！", 'danger',"top",1000);
               return false;
             }
           }
@@ -377,7 +370,7 @@ export class UserInfoPage implements OnInit {
               // 修改页面中的值
               this.birthday = `${data.year.text}-${data.month.text}-${data.day.text}`;
             } else {
-              this.presentToast('修改失败！', 'danger');
+              this.ionic.Toast('修改失败！', 'danger',"top",1000);
             }
           });
         }
@@ -442,12 +435,11 @@ export class UserInfoPage implements OnInit {
                     });
                   }
                 } else {
-                  this.presentToast('修改失败！', 'danger');
+                  this.ionic.Toast('修改失败！', 'danger',"top",1000);
                 }
               });
             } else {
-              const message = "请选择至少一个个性标签！";
-              this.presentToast(message, 'danger');
+              this.ionic.Toast("请选择至少一个个性标签！", 'danger',"top",1000);
               return false;
             }
           }
@@ -488,12 +480,11 @@ export class UserInfoPage implements OnInit {
                   // 修改页面中的值
                   this.signature = data.signature;
                 } else {
-                  this.presentToast('修改失败！', 'danger');
+                  this.ionic.Toast('修改失败！', 'danger',"top",1000);
                 }
               });
             } else {
-              const message = "个性签名不能为空，请检查！";
-              this.presentToast(message, 'danger');
+              this.ionic.Toast("个性签名不能为空，请检查！", 'danger',"top",1000);
               return false;
             }
           }
@@ -501,17 +492,6 @@ export class UserInfoPage implements OnInit {
       ]
     });
     await alert.present();
-  }
-
-  // ionic toast
-  async presentToast(message: string, color: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 1000,
-      color: color,
-      position: 'top'
-    });
-    toast.present();
   }
 
   // 向后台发送信息
@@ -522,8 +502,10 @@ export class UserInfoPage implements OnInit {
     this.http.post<any>(environment.baseUrl + 'ApiRoot/UserInfo/UpdateInfor', JSON.stringify(userInfo), httpOptions).subscribe((data: any) => {
       if (data.Status === 'ok') {
         this.changeJudge.infoCgJudge.emit('ok');
+        this.ionic.Toast('修改成功！',"success","top",1000);
       } else {
         this.changeJudge.infoCgJudge.emit('no');
+        this.ionic.Toast('修改失败！',"danger","top",1000);
       }
     }, err => {
       throw new Error(err);

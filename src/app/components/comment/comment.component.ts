@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { IonicService } from 'src/app/share/service/ionic.service';
 
 @Component({
   selector: 'app-comment',
@@ -17,7 +17,9 @@ export class CommentComponent implements OnInit {
   // 存储用户写的评论内容
   public comContent: string;
 
-  constructor(public toastController: ToastController) { }
+  constructor(
+    public ionic: IonicService
+  ) { }
 
   ngOnInit() { }
 
@@ -27,8 +29,10 @@ export class CommentComponent implements OnInit {
       // 获取昵称
       let nickName = window.localStorage.getItem('nickName');
       this.comment.unshift({ userId: window.localStorage.getItem('userId'), nickName: nickName === null || undefined ? '暂无' : nickName, headPhoto: "https://s2.ax1x.com/2020/03/03/34B4cF.png", content: this.comContent, like: 0 });
+      // 清空评论
+      this.comContent = null;
     } else {
-      this.presentToast();
+      this.ionic.Toast('不能发表空评论！','danger','top',1000);
       return false;
     }
 
@@ -48,17 +52,6 @@ export class CommentComponent implements OnInit {
       this.likeIcon.name = 'thumbs-up-outline';
     }
     this.likeNum.el.textContent = String(num);
-  }
-
-  // ionic toast
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: '不能发表空评论！',
-      duration: 1000,
-      position: 'top',
-      color: 'danger'
-    });
-    toast.present();
   }
 
 }

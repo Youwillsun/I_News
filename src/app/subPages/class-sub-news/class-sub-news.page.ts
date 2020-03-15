@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DateMethod } from 'src/app/share/class/DateMethod';
-import { ToastController } from '@ionic/angular';
+import { IonicService } from 'src/app/share/service/ionic.service';
 
 @Component({
   selector: 'app-class-sub-news',
@@ -23,7 +23,7 @@ export class ClassSubNewsPage implements OnInit {
     public router: Router,
     public route: ActivatedRoute,
     public http: HttpClient,
-    public toastController: ToastController
+    public ionic:IonicService
   ) { }
 
   ngOnInit() {
@@ -50,8 +50,7 @@ export class ClassSubNewsPage implements OnInit {
           if (index + 1 === res.length) {
             // 如果这一类别新闻数组为空
             if (this.newsData.length === 0) {
-              const mes = '此类新闻暂无数据！';
-              this.presentToast(mes, 'danger');
+              this.ionic.Toast('此类新闻暂无数据！', 'danger',"top");
               // 路由回分类页面
               this.router.navigate(['/tabs/class']);
               return false;
@@ -72,17 +71,6 @@ export class ClassSubNewsPage implements OnInit {
   // 去新闻详情页
   toNewsDetail(id: string) {
     this.router.navigate(['/newsDetails', { id }]);
-  }
-
-  // ionic toast
-  async presentToast(message: string, color: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 1500,
-      color: color,
-      position: 'top'
-    });
-    toast.present();
   }
 
 }

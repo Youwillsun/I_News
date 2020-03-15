@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-
-// ionic的alert弹窗
-import { AlertController, ToastController } from '@ionic/angular';
-
+import { IonicService } from '../share/service/ionic.service';
 // 引入加解密算法
-import { INEncrypt } from '../share/class/INEncrypt'
+import { INEncrypt } from '../share/class/INEncrypt';
 import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-login',
@@ -36,9 +34,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     public router: Router,
-    public alertController: AlertController,
-    public toastController: ToastController,
-    public http: HttpClient
+    public http: HttpClient,
+    public ionic: IonicService
   ) { }
 
   ngOnInit() {
@@ -86,7 +83,7 @@ export class LoginPage implements OnInit {
           data.List.forEach((item: any) => {
             this.userId = item.Id;
           });
-          this.presentToast(data.Mess, 'success');
+          this.ionic.Toast(data.Mess,"success","top");
           // 登录成功消失，进入首页
           setTimeout(() => {
             // 成功登录 在本地存储中存储账号密码
@@ -98,14 +95,13 @@ export class LoginPage implements OnInit {
             this.router.navigate(['/tabs']);
           }, 1500);
         } else {
-          this.presentToast('账号或密码有误，请检查！', 'danger');
+          this.ionic.Toast('账号或密码有误，请检查！', 'danger',"top");
         }
       }, err => {
         throw new Error(err);
       });
     } else {
-      const message = '账号或密码有误，请检查！';
-      this.presentToast(message, 'danger');
+      this.ionic.Toast('账号或密码有误，请检查！', 'danger',"top");
     }
   }
 
@@ -128,45 +124,24 @@ export class LoginPage implements OnInit {
           };
           this.http.post<any>(environment.baseUrl+'ApiRoot/Login/RegisterSomeone', JSON.stringify(registerInfo), header).subscribe((data: any) => {
             if (data.Status === 'ok') {
-              this.presentToast(data.Mess, 'success');
+              this.ionic.Toast(data.Mess, 'success',"top");
               // 注册成功显示登录页面
               this.isLogin = true;
             } else {
-              this.presentToast(data.Mess, 'danger');
+              this.ionic.Toast(data.Mess, 'danger',"top");
             }
           }, err => {
             console.log(JSON.stringify(err));
             throw new Error(err);
           });
         } else {
-          const message = '两次密码不一致！';
-          this.presentToast(message, 'danger');
+          this.ionic.Toast('两次密码不一致！', 'danger',"top");
         }
       } else {
-        const message = '手机号或密码格式有误！';
-        this.presentToast(message, 'danger');
+        this.ionic.Toast('手机号或密码格式有误！', 'danger',"top");
       }
-
     } else {
-      const message = '请完善注册信息！';
-      this.presentToast(message, 'danger');
+      this.ionic.Toast('请完善注册信息！', 'danger',"top");
     }
   }
-
-  /**
-   * ionic toast 函数
-   * @param toastMessage toast显示的字符串
-   */
-  async presentToast(toastMessage: string, color: string) {
-    const toast = await this.toastController.create({
-      message: toastMessage,
-      duration: 1500,
-      position: "top",
-      color: color
-    });
-    toast.present();
-  }
-
-
-
 }

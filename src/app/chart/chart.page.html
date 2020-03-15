@@ -3,11 +3,11 @@
 <ion-content>
   <!-- 新闻图表chip -->
   <div class="chipBox">
-    <ion-chip color="primary">
+    <ion-chip color="primary" (click)="todayNews()">
       <ion-icon name="bar-chart-outline"></ion-icon>
       <ion-label>柱状图</ion-label>
     </ion-chip>
-    <ion-chip color="primary">
+    <ion-chip color="primary" (click)="newsClass()">
       <ion-icon name="pie-chart-outline"></ion-icon>
       <ion-label>饼图</ion-label>
     </ion-chip>

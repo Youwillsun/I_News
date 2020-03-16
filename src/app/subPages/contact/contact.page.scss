@@ -1,6 +1,11 @@
 .title {
-    text-align: center;
+    display: flex;
+    justify-content: center;
     margin-top: 10vh;
+    ion-img{
+        width: 60vw;
+        margin-bottom: 3vh;
+    }
 }
 
 .content {
@@ -13,7 +18,7 @@
     }
     .number {
         .contactBtn {
-            margin: 20vh 5vw 0 5vw;
+            margin: 10vh 5vw 0 5vw;
             color: #fff;
             text-decoration: none;
 

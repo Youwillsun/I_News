@@ -2,11 +2,10 @@
   <!-- 登录 -->
   <ion-content *ngIf="isLogin">
     <div class="loginTitle">
-      <h1>爱看新闻</h1>
-      <p>没有账号？<a href="javascript:void(0)" (click)="registerPage()">点击注册！</a></p>
+      <ion-img src="../../assets/images/logo.png" style="width: 65vw;"></ion-img>
     </div>
     <!-- 登录表单 -->
-    <ion-list style="margin-left: -4vw !important;">
+    <div class="form">
       <!-- 账号 -->
       <ion-item lines="inset">
         <ion-label position="floating" color="dark">账号</ion-label>
@@ -17,7 +16,10 @@
         <ion-label position="floating" color="dark">密码</ion-label>
         <ion-input required type="password" [(ngModel)]="loginPwd"></ion-input>
       </ion-item>
-    </ion-list>
+      <div style="text-align: right;">
+        <p>没有账号？<a href="javascript:void(0)" (click)="registerPage()" style="text-decoration: none;">点击注册！</a></p>
+      </div>
+    </div>
     <!-- 登录按钮 -->
     <div class="loginBtn">
       <ion-button expand="block" class="ion-no-margin" (click)="login()">登录</ion-button>
@@ -30,7 +32,7 @@
       <p>已有账号？<a href="javascript:void(0)" (click)="loginPage()">点击登录！</a></p>
     </div>
     <!-- 注册表单 -->
-    <ion-list style="margin-left: -4vw !important;">
+    <div class="form">
       <!-- 手机号 -->
       <ion-item lines="inset">
         <ion-label position="floating" color="dark">请输入您的手机号</ion-label>
@@ -46,7 +48,11 @@
         <ion-label position="floating" color="dark">请再次确认密码</ion-label>
         <ion-input required type="password" [(ngModel)]="registerPwdAgain"></ion-input>
       </ion-item>
-    </ion-list>
+      <ion-item lines="none" style="margin-top: 10px;">
+        <ion-checkbox color="primary" checked slot="start" (ionChange)="agreement()"></ion-checkbox>
+        <span class="agreement">我已阅读并同意<a href="javascript:void(0)">爱看新闻团队用户协议</a>和<a href="javascript:void(0)">爱看新闻团队APP公约</a></span>
+      </ion-item>
+    </div>
     <!-- 注册按钮 -->
     <div class="loginBtn">
       <ion-button expand="block" class="ion-no-margin" (click)="register()">注册</ion-button>

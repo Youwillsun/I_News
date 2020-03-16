@@ -1,8 +1,21 @@
 .container{
     padding: 0 6vw 0 6vw;
+    background-color: rgb(255, 255, 255);
+}
+ion-content{
+    --background: rgb(255, 255, 255);
 }
 .loginTitle{
     margin-top: 20vh;
+    margin-bottom: 5vh;
+}
+
+.form{
+    margin-left: -4vw !important;
+}
+
+ion-item{
+    --background:rgb(255, 255, 255);
 }
 
 .registerTitle{
@@ -11,4 +24,19 @@
 
 .loginBtn{
     margin-top: 10vh;
+    cursor: pointer;
+}
+
+ion-checkbox{
+    margin-right: 5px;
+}
+
+.agreement{
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-left: 5px;
+    a{
+        font-weight: bold;
+        text-decoration: none;
+    }
 }

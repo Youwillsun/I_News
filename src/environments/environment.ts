@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://www.barteam.cn:1010/'
+  baseUrl: 'http://www.barteam.cn:1010/',
+  rootPath: 'http://localhost:3000/'
 };
 
 /*

@@ -1,3 +1,3 @@
 *.ts linguist-language=ionic
-*.css linguist-language=ionic
+*.scss linguist-language=ionic
 *.html linguist-language=ionic

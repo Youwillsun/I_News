@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DateMethod } from 'src/app/share/class/DateMethod';
 import { IonicService } from 'src/app/share/service/ionic.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-class-sub-news',
@@ -13,7 +14,7 @@ export class ClassSubNewsPage implements OnInit {
 
   // 标题
   public title: string;
-  public backButton:boolean = true;
+  public backButton: boolean = true;
   // 新闻类别id
   public newsClassId: string;
   // 存储新闻数据
@@ -23,7 +24,7 @@ export class ClassSubNewsPage implements OnInit {
     public router: Router,
     public route: ActivatedRoute,
     public http: HttpClient,
-    public ionic:IonicService
+    public ionic: IonicService
   ) { }
 
   ngOnInit() {
@@ -38,30 +39,23 @@ export class ClassSubNewsPage implements OnInit {
 
   // 获取对应新闻类别的新闻数据
   fetchNewsData() {
-    this.http.get<any>("../../../assets/data/news.json").subscribe((data: any) => {
-      if (data.statusText === 'OK') {
+    this.http.post<any>(environment.rootPath + "classAllNews", { id: this.newsClassId }).subscribe((data: any) => {
+      if (data.status === 'success') {
         let res = data.data;
         res.forEach((item: any, index: number) => {
           // 今日及其之前的新闻，且属于这一类别
-          if (DateMethod.compare(item.date) === 'ok' && this.newsClassId === item.classId) {
+          if (DateMethod.compare(item.newsTime) === 'ok') {
             this.newsData.push(item);
           }
           // 如果是最后一次循环
           if (index + 1 === res.length) {
-            // 如果这一类别新闻数组为空
-            if (this.newsData.length === 0) {
-              this.ionic.Toast('此类新闻暂无数据！', 'danger',"top");
-              // 路由回分类页面
-              this.router.navigate(['/tabs/class']);
-              return false;
-            } else {
-              // 对此数组进行排序
-              DateMethod.dateSort(this.newsData,'date','rev');
-            }
+            // 对此数组进行排序
+            DateMethod.dateSort(this.newsData, 'date', 'rev');
           }
         });
       } else {
-        throw new Error('data有误');
+        this.ionic.Toast(data.data.msg, 'danger', "top");
+        this.router.navigate(['/tabs/class']);
       }
     }, err => {
       throw new Error(err);

@@ -6,7 +6,7 @@
     <ion-item>
       <ion-thumbnail slot="start">
         <ion-avatar>
-          <img src="https://s2.ax1x.com/2020/03/03/34B4cF.png">
+          <img [src]="userPhoto">
         </ion-avatar>
       </ion-thumbnail>
       <ion-label>
@@ -27,12 +27,19 @@
       <ion-text fill="outline" slot="start">完善信息</ion-text>
     </ion-item>
   </ion-card>
+  <!-- 我的收藏 -->
+  <ion-card>
+    <ion-item lines="none" button (click)="toMyCollect()">
+      <ion-icon slot="start" name="heart-outline"></ion-icon>
+      <ion-text fill="outline" slot="start">我的收藏</ion-text>
+    </ion-item>
+  </ion-card>
   <!-- 消息通知 -->
   <ion-card>
     <ion-item lines="none" button (click)="toMessage()">
       <ion-icon slot="start" name="notifications-outline"></ion-icon>
       <ion-text fill="outline" slot="start">消息通知</ion-text>
-      <ion-badge color="danger" slot="end">{{msgNum}}</ion-badge>
+      <ion-badge *ngIf="msgNum" color="danger" slot="end">{{msgNum}}</ion-badge>
     </ion-item>
   </ion-card>
   <!-- 联系我们 -->

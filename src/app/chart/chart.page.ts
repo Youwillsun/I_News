@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { IonicService } from '../share/service/ionic.service';
 
 @Component({
   selector: 'app-chart',
@@ -19,7 +21,8 @@ export class ChartPage implements OnInit {
   public title = "新闻统计";
 
   constructor(
-    public http: HttpClient
+    public http: HttpClient,
+    public ionic: IonicService
   ) { }
 
   ngOnInit() {
@@ -42,12 +45,9 @@ export class ChartPage implements OnInit {
   // Echarts图数据
   chartData() {
     // 拿到news-class数据
-    this.http.get<any>("../../assets/data/news-class.json").subscribe((data: any) => {
-      let newsClassData = data.data;
-      // 拿到news数据
-      this.http.get<any>("../../assets/data/news.json").subscribe((res: any) => {
-        let newsData = res.data;
-
+    this.http.get<any>(environment.rootPath + "newsStatData").subscribe((data: any) => {
+      if (data.status === 'success') {
+        let newsClassData = data.data;
         // 存储newclass的名称【给柱状图，饼图用】
         let newsClassName: string[] = [];
         // 存储此类新闻的数量【给柱状图】
@@ -55,18 +55,12 @@ export class ChartPage implements OnInit {
         // 存储新闻数量和此类新闻名称【给饼图】
         let newsNameANumber: any[] = [];
         newsClassData.forEach((item: any, index: number) => {
-          // 设置一个初始值
-          let count = 0;
-          newsClassName.push(item.class.substring(0, 2));
-          newsData.forEach((el: any, num: number) => {
-            if (item.id === el.classId) {
-              count++;
-            }
-            if (num + 1 === newsData.length) {
-              newClassNumber.push(count);
-              newsNameANumber.push({ value: count, name: item.class.substring(0, 2) });
-            }
-          });
+          // 剪切并存储标题
+          newsClassName.push(item.className.substring(0, 2));
+          // 存储新闻数量
+          newClassNumber.push(item.count);
+          // 饼图的
+          newsNameANumber.push({ value: item.count, name: item.className.substring(0, 2) });
           if (index + 1 === newsClassData.length) {
             // 柱状图配置
             this.barOption = {
@@ -101,8 +95,8 @@ export class ChartPage implements OnInit {
                 name: '新闻数量',
                 type: 'line',
                 data: newClassNumber,
-                lineStyle:{
-                  color:'#FF9B00'
+                lineStyle: {
+                  color: '#FF9B00'
                 }
               }]
             }
@@ -128,9 +122,10 @@ export class ChartPage implements OnInit {
             }
           }
         });
-      }, err => {
-        throw new Error(err);
-      });
+      } else {
+        this.ionic.Toast(data.data.msg, "danger", "top");
+      }
+
     }, err => {
       throw new Error(err);
     });

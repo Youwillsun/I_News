@@ -33,7 +33,11 @@ const routes: Routes = [
   {
     path: 'contact',
     loadChildren: () => import('./subPages/contact/contact.module').then( m => m.ContactPageModule)
+  },  {
+    path: 'my-collects',
+    loadChildren: () => import('./subPages/my-collects/my-collects.module').then( m => m.MyCollectsPageModule)
   }
+
 ];
 @NgModule({
   imports: [

@@ -13,7 +13,7 @@ import { IonicService } from 'src/app/share/service/ionic.service';
 })
 export class UserInfoPage implements OnInit {
 
-  public title:string = '我的信息';
+  public title: string = '我的信息';
   public backButton: boolean = true;
 
   // ionic日期组件配置
@@ -36,21 +36,8 @@ export class UserInfoPage implements OnInit {
   public labelCopy: string;
   // 个性签名
   public signature: string;
-
-
-  // 设定个人信息模板
-  public UserInfomation = {
-    Id: Number(window.localStorage.getItem('userId')),
-    name: '',
-    age: 0,
-    phone: '',
-    nickName: '',
-    vipName: '',
-    country: '',
-    province: '',
-    city: '',
-    county: ''
-  }
+  // 用户id
+  public userId: string;
 
   constructor(
     public http: HttpClient,
@@ -61,6 +48,7 @@ export class UserInfoPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.userId = window.localStorage.getItem('userId');
     // 调用修改出生日期函数
     this.changeBirthday();
     // 调用获取默认值函数
@@ -68,40 +56,34 @@ export class UserInfoPage implements OnInit {
   }
 
   // 获取默认值
-  public defaultValue(){
-    this.http.get<any>(environment.baseUrl+'ApiRoot/UserInfo/GetUserInfo?id='+window.localStorage.getItem('regId')).subscribe((data:any)=>{
-      if(data.Status === 'ok'){
-        // 遍历返回过来的数据，同时修改数据模板
-        data.List.forEach((item:any) => {
-          // 名字
-          this.name = item.name;
-          this.UserInfomation.name = item.name;
-          // 手机
-          this.phone = item.phone;
-          this.UserInfomation.phone = item.phone;
-          // 昵称
-          this.nickName = item.nickName;
-          this.UserInfomation.nickName = item.nickName;
-          // QQ
-          this.qqNumber = item.vipName;
-          this.UserInfomation.vipName = item.vipName;
-          // 微信
-          this.weChatNumber = item.country;
-          this.UserInfomation.country = item.country;
-          // 个性标签
-          this.label = this.commonData.matchLabel(item.province);
-          this.UserInfomation.province = item.province;
-          // 个人签名
-          this.signature = item.city;
-          this.UserInfomation.city = item.city;
-          // 出生日期
-          this.birthday = item.county;
-          this.UserInfomation.county = item.county;
-        });
-      } else {
-        throw new Error('data有误');
-      }
-    },err=>{
+  public defaultValue() {
+    this.http.post<any>(environment.rootPath + 'getUserInfo', { id: this.userId }).subscribe((data: any) => {
+      if (data.status === 'success') {
+        let res = data.data;
+        // 名字
+        this.name = res.realName;
+        // 手机
+        this.phone = res.phone;
+
+        // 昵称
+        this.nickName = res.nickName;
+
+        // QQ
+        this.qqNumber = res.qqNumber;
+
+        // 微信
+        this.weChatNumber = res.weChatNumber;
+
+        // 个性标签
+        this.label = this.commonData.matchLabel(res.personalityLabel);
+
+        // 个人签名
+        this.signature = res.introduction;
+
+        // 出生日期
+        this.birthday = res.birthday;
+      } else { }
+    }, err => {
       throw new Error(err);
     });
   };
@@ -128,20 +110,18 @@ export class UserInfoPage implements OnInit {
           text: '确认',
           handler: (data: any) => {
             if (data.nickName) {
-              // 修改信息模板中数据
-              this.UserInfomation.nickName = data.nickName;
               // 向后台发送数据
-              this.sendUserMsg(this.UserInfomation);
+              this.sendUserMsg({ nickName: data.nickName });
               this.changeJudge.infoCgJudge.subscribe((value: string) => {
                 if (value === 'ok') {
                   // 修改页面中的值
                   this.nickName = data.nickName;
                 } else {
-                  this.ionic.Toast('修改失败！', 'danger',"top",1000);
+                  this.ionic.Toast('修改失败！', 'danger', "top", 1000);
                 }
               });
             } else {
-              this.ionic.Toast("昵称不能为空，请检查！", 'danger',"top",1000);
+              this.ionic.Toast("昵称不能为空，请检查！", 'danger', "top", 1000);
               return false;
             }
 
@@ -175,20 +155,18 @@ export class UserInfoPage implements OnInit {
           text: '确认',
           handler: (data: any) => {
             if (data.name) {
-              // 修改信息模板的值
-              this.UserInfomation.name = data.name;
               // 向后台发送数据
-              this.sendUserMsg(this.UserInfomation);
+              this.sendUserMsg({ realName: data.name });
               this.changeJudge.infoCgJudge.subscribe((value: string) => {
                 if (value === 'ok') {
                   // 修改页面中的数据
                   this.name = data.name;
                 } else {
-                  this.ionic.Toast('修改失败！', 'danger',"top",1000);
+                  this.ionic.Toast('修改失败！', 'danger', "top", 1000);
                 }
               });
             } else {
-              this.ionic.Toast("姓名不能为空，请检查！", 'danger',"top",1000);
+              this.ionic.Toast("姓名不能为空，请检查！", 'danger', "top", 1000);
               return false;
             }
 
@@ -224,24 +202,22 @@ export class UserInfoPage implements OnInit {
             const phoneRegExp = new RegExp('^[0-9]{11}$');
             if (data.phone) {
               if (phoneRegExp.test(data.phone)) {
-                // 修改信息模板的值
-                this.UserInfomation.phone = data.phone;
                 // 向后台发送数据
-                this.sendUserMsg(this.UserInfomation);
+                this.sendUserMsg({ phone: data.phone });
                 this.changeJudge.infoCgJudge.subscribe((value: string) => {
                   if (value === 'ok') {
                     // 修改页面中的数据
                     this.phone = data.phone;
                   } else {
-                    this.ionic.Toast('修改失败！', 'danger',"top",1000);
+                    this.ionic.Toast('修改失败！', 'danger', "top", 1000);
                   }
                 });
               } else {
-                this.ionic.Toast("手机号格式有误，请检查！", 'danger',"top",1000);
+                this.ionic.Toast("手机号格式有误，请检查！", 'danger', "top", 1000);
                 return false;
               }
             } else {
-              this.ionic.Toast("手机号为空，请检查！", 'danger',"top",1000);
+              this.ionic.Toast("手机号为空，请检查！", 'danger', "top", 1000);
               return false;
             }
           }
@@ -275,24 +251,22 @@ export class UserInfoPage implements OnInit {
             const qqRegExp = new RegExp('^[1-9][0-9]{4,9}$');
             if (data.QQ) {
               if (qqRegExp.test(data.QQ)) {
-                // 修改信息模板的值
-                this.UserInfomation.vipName = data.QQ;
                 // 向后台发送数据
-                this.sendUserMsg(this.UserInfomation);
+                this.sendUserMsg({ qqNumber: data.QQ });
                 this.changeJudge.infoCgJudge.subscribe((value: string) => {
                   if (value === 'ok') {
                     // 修改页面中的数据
                     this.qqNumber = data.QQ;
                   } else {
-                    this.ionic.Toast('修改失败！', 'danger','top',1000);
+                    this.ionic.Toast('修改失败！', 'danger', 'top', 1000);
                   }
                 });
               } else {
-                this.ionic.Toast("QQ号格式有误，请检查！", 'danger','top',1000);
+                this.ionic.Toast("QQ号格式有误，请检查！", 'danger', 'top', 1000);
                 return false;
               }
             } else {
-              this.ionic.Toast("QQ号为空，请检查！", 'danger','top',1000);
+              this.ionic.Toast("QQ号为空，请检查！", 'danger', 'top', 1000);
               return false;
             }
           }
@@ -326,24 +300,22 @@ export class UserInfoPage implements OnInit {
             const weChatRegExp = new RegExp('^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}$');
             if (data.weChat) {
               if (weChatRegExp.test(data.weChat)) {
-                // 修改信息模板的值
-                this.UserInfomation.country = data.weChat;
                 // 向后台发送数据
-                this.sendUserMsg(this.UserInfomation);
+                this.sendUserMsg({ weChatNumber: data.weChat });
                 this.changeJudge.infoCgJudge.subscribe((value: string) => {
                   if (value === 'ok') {
                     // 修改页面中的数据
                     this.weChatNumber = data.weChat;
                   } else {
-                    this.ionic.Toast('修改失败！', 'danger',"top",1000);
+                    this.ionic.Toast('修改失败！', 'danger', "top", 1000);
                   }
                 });
               } else {
-                this.ionic.Toast("微信号格式有误，请检查！", 'danger',"top",1000);
+                this.ionic.Toast("微信号格式有误，请检查！", 'danger', "top", 1000);
                 return false;
               }
             } else {
-              this.ionic.Toast("微信号为空，请检查！", 'danger',"top",1000);
+              this.ionic.Toast("微信号为空，请检查！", 'danger', "top", 1000);
               return false;
             }
           }
@@ -361,16 +333,14 @@ export class UserInfoPage implements OnInit {
       }, {
         text: '确认',
         handler: (data: any) => {
-          // 修改信息模板的值
-          this.UserInfomation.county = `${data.year.text}-${data.month.text}-${data.day.text}`;
           // 向后台发送数据
-          this.sendUserMsg(this.UserInfomation);
+          this.sendUserMsg({ birthday: `${data.year.text}-${data.month.text}-${data.day.text}` });
           this.changeJudge.infoCgJudge.subscribe((value: string) => {
             if (value === 'ok') {
               // 修改页面中的值
               this.birthday = `${data.year.text}-${data.month.text}-${data.day.text}`;
             } else {
-              this.ionic.Toast('修改失败！', 'danger',"top",1000);
+              this.ionic.Toast('修改失败！', 'danger', "top", 1000);
             }
           });
         }
@@ -419,9 +389,7 @@ export class UserInfoPage implements OnInit {
             if (data.length !== 0) {
               // 向后台发送
               this.labelCopy = data.join(',');
-              // 修改信息模板的值
-              this.UserInfomation.province = this.labelCopy;
-              this.sendUserMsg(this.UserInfomation);
+              this.sendUserMsg({ personalityLabel: this.labelCopy });
               this.changeJudge.infoCgJudge.subscribe((value: string) => {
                 if (value === 'ok') {
                   // 清空原有的个性标签
@@ -435,11 +403,11 @@ export class UserInfoPage implements OnInit {
                     });
                   }
                 } else {
-                  this.ionic.Toast('修改失败！', 'danger',"top",1000);
+                  this.ionic.Toast('修改失败！', 'danger', "top", 1000);
                 }
               });
             } else {
-              this.ionic.Toast("请选择至少一个个性标签！", 'danger',"top",1000);
+              this.ionic.Toast("请选择至少一个个性标签！", 'danger', "top", 1000);
               return false;
             }
           }
@@ -471,20 +439,18 @@ export class UserInfoPage implements OnInit {
           text: '确认',
           handler: (data: any) => {
             if (data.signature) {
-              // 修改信息模板的值
-              this.UserInfomation.city = data.signature;
               // 向后台发送数据
-              this.sendUserMsg(this.UserInfomation);
+              this.sendUserMsg({ introduction: data.signature });
               this.changeJudge.infoCgJudge.subscribe((value: string) => {
                 if (value === 'ok') {
                   // 修改页面中的值
                   this.signature = data.signature;
                 } else {
-                  this.ionic.Toast('修改失败！', 'danger',"top",1000);
+                  this.ionic.Toast('修改失败！', 'danger', "top", 1000);
                 }
               });
             } else {
-              this.ionic.Toast("个性签名不能为空，请检查！", 'danger',"top",1000);
+              this.ionic.Toast("个性签名不能为空，请检查！", 'danger', "top", 1000);
               return false;
             }
           }
@@ -499,13 +465,13 @@ export class UserInfoPage implements OnInit {
     // 定义请求头
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     // 发送请求
-    this.http.post<any>(environment.baseUrl + 'ApiRoot/UserInfo/UpdateInfor', JSON.stringify(userInfo), httpOptions).subscribe((data: any) => {
-      if (data.Status === 'ok') {
+    this.http.post<any>(environment.rootPath + 'updateUserInfo', { id: this.userId, data: userInfo }, httpOptions).subscribe((data: any) => {
+      if (data.status === 'success') {
         this.changeJudge.infoCgJudge.emit('ok');
-        this.ionic.Toast('修改成功！',"success","top",1000);
+        this.ionic.Toast(data.data.msg, "success", "top", 1000);
       } else {
         this.changeJudge.infoCgJudge.emit('no');
-        this.ionic.Toast('修改失败！',"danger","top",1000);
+        this.ionic.Toast(data.data.msg, "danger", "top", 1000);
       }
     }, err => {
       throw new Error(err);

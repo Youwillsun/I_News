@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { IonicService } from '../share/service/ionic.service';
 @Component({
   selector: 'app-class',
   templateUrl: './class.page.html',
@@ -15,7 +17,8 @@ export class ClassPage implements OnInit {
 
   constructor(
     public router: Router,
-    public http: HttpClient
+    public http: HttpClient,
+    public ionic:IonicService
   ) { }
 
   ngOnInit() {
@@ -24,11 +27,11 @@ export class ClassPage implements OnInit {
 
   // 获取newsClass数据
   fetchNewsClassData() {
-    this.http.get<any>("../../assets/data/news-class.json").subscribe((data: any) => {
-      if (data.statusText === 'OK') {
+    this.http.get<any>(environment.rootPath+"getNewsClass").subscribe((data: any) => {
+      if (data.status === 'success') {
         this.newsClassData = data.data;
       } else {
-        throw new Error('data有误');
+        this.ionic.Toast(data.data.msg,"danger","top");
       }
     }, err => {
       throw new Error(err);

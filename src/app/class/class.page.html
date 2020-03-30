@@ -3,12 +3,12 @@
 <ion-content>
   <!-- 新闻类别 -->
   <div *ngFor="let item of newsClassData">
-    <ion-card (click)="toSubNews(item.id,item.class)">
+    <ion-card (click)="toSubNews(item._id,item.newsClassName)">
       <ion-item lines="none" button>
         <ion-avatar>
-          <img [src]="item.classThumbnail" />
+          <img [src]="item.newsClassThumbnai" />
         </ion-avatar>
-        <ion-label style="margin-left: 20px;">{{item.class}}</ion-label>
+        <ion-label style="margin-left: 20px;">{{item.newsClassName}}</ion-label>
       </ion-item>
     </ion-card>
   </div>

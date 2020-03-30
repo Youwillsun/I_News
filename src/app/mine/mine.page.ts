@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
-import { DateMethod } from '../share/class/DateMethod';
 import { CommonDataService } from '../share/service/common-data.service';
 import { environment } from 'src/environments/environment';
+import { IonicService } from '../share/service/ionic.service';
 
 @Component({
   selector: 'app-mine',
@@ -16,7 +16,7 @@ export class MinePage implements OnInit {
   // 标题
   public title = '我的';
   // 用户id
-  public regId: any;
+  public userId: any;
   // 存储用户个性标签
   public userTag = [];
   // 存储用户昵称
@@ -25,12 +25,17 @@ export class MinePage implements OnInit {
   public userSign: string;
   // 存储信息数量
   public msgNum: number;
+  // 存储用户头像
+  public userPhoto: string;
+  // 默认头像
+  public defaultUserPhoto: string = 'https://s2.ax1x.com/2020/03/03/34B4cF.png';
 
   constructor(
     public router: Router,
     public alertController: AlertController,
     public http: HttpClient,
-    public commonData: CommonDataService
+    public commonData: CommonDataService,
+    public ionic: IonicService
   ) {
     // ionic 自带的返回按钮返回不会触发页面的ngOnInit钩子，所以通过监听路由来实现
     router.events.subscribe((event: NavigationEnd) => {
@@ -45,7 +50,7 @@ export class MinePage implements OnInit {
 
   ngOnInit() {
     // 从本地中获取用户id
-    this.regId = window.localStorage.getItem('regId');
+    this.userId = window.localStorage.getItem('userId');
     // 调用个人信息函数
     this.userInfo();
     // 调用消息数量函数
@@ -54,36 +59,38 @@ export class MinePage implements OnInit {
 
   // 获取个人信息
   userInfo() {
-    this.http.get<any>(environment.baseUrl+"ApiRoot/UserInfo/GetUserInfo?id=" + this.regId).subscribe((data: any) => {
-      if (data.Status === 'ok') {
-        data.List.forEach((item: any) => {
-          // 存储用户id
-          window.localStorage.setItem('userId', item.Id);
-          
-          // 昵称
-          if (!item.nickName) {
-            this.nickName = '暂无';
-          } else {
-            this.nickName = item.nickName;
-          }
-          // 存储昵称
-          window.localStorage.setItem('nickName',this.nickName);
+    this.http.post<any>(environment.rootPath + "getUserInfo", { id: this.userId }).subscribe((data: any) => {
+      if (data.status === 'success') {
+        let res = data.data;
+        // 用户头像
+        if (!res.userPhoto) {
+          this.userPhoto = this.defaultUserPhoto;
+        } else {
+          this.userPhoto = res.userPhoto;
+        }
+        // 昵称
+        if (!res.nickName) {
+          this.nickName = '暂无';
+        } else {
+          this.nickName = res.nickName;
+        }
+        // 存储昵称
+        window.localStorage.setItem('nickName', this.nickName);
 
-          // 个性签名
-          if (!item.city) {
-            this.userSign = '太懒啦，什么都没写！';
-          } else {
-            this.userSign = item.city;
-          }
-          // 个性标签
-          if (!item.province) {
-            this.userTag.push({ color: 'primary', tag: "暂无" });
-          } else {
-            this.userTag = this.commonData.matchLabel(item.province);
-          }
-        });
+        // 个性签名
+        if (!res.introduction) {
+          this.userSign = '太懒啦，什么都没写！';
+        } else {
+          this.userSign = res.introduction;
+        }
+        // 个性标签
+        if (!res.personalityLabel) {
+          this.userTag.push({ color: 'primary', tag: "暂无" });
+        } else {
+          this.userTag = this.commonData.matchLabel(res.personalityLabel);
+        }
       } else {
-        throw new Error('data有误');
+        this.ionic.Toast(data.data.msg, "danger", "top");
       }
     }, err => {
       throw new Error(err);
@@ -92,21 +99,11 @@ export class MinePage implements OnInit {
 
   // 获取消息数量
   messageNum() {
-    this.http.get<any>("../../assets/data/message.json").subscribe((data: any) => {
-      if (data.statusText === 'OK') {
-        let res = data.data;
-        // 定义初始值
-        let count = 0;
-        res.forEach((item: any, index: number) => {
-          if (DateMethod.compare(item.time) === 'ok') {
-            count++;
-          }
-          if (index + 1 === res.length) {
-            this.msgNum = count;
-          }
-        });
+    this.http.get<any>(environment.rootPath + "getMessageInfo").subscribe((data: any) => {
+      if (data.status === 'success') {
+        this.msgNum = data.data;
       } else {
-        throw new Error('data有误');
+        this.ionic.Toast(data.data.msg, "danger", "top");
       }
     }, err => {
       throw new Error(err);
@@ -118,9 +115,20 @@ export class MinePage implements OnInit {
     this.router.navigate(['/userinfo']);
   }
 
+  // 去我的收藏界面
+  toMyCollect(){
+    this.router.navigate(['/my-collects']);
+  }
+
   // 去消息通知界面
   toMessage() {
-    this.router.navigate(['/message']);
+    this.http.post<any>(environment.rootPath + "updateMsgIdentify", {}).subscribe((data: any) => {
+      if (data.status === 'success') {
+        this.router.navigate(['/message']);
+      } else {
+        this.ionic.Toast(data.data.msg, "danger", "top");
+      }
+    });
   }
 
   // 去联系我们界面
@@ -144,6 +152,7 @@ export class MinePage implements OnInit {
             // 删除本地存储信息[账号和密码]
             window.localStorage.removeItem('account');
             window.localStorage.removeItem('password');
+            window.localStorage.removeItem('userId');
             // 路由到登录页面
             this.router.navigate(["/login"])
           }
@@ -154,14 +163,3 @@ export class MinePage implements OnInit {
   }
 
 }
-
-
-// name           名字
-// age            null
-// phone          手机
-// nickName       昵称
-// vipName        QQ
-// country        微信
-// province       个性标签
-// city           个人签名
-// county         出生日期

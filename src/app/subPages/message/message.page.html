@@ -2,13 +2,13 @@
 
 <ion-content>
   <div class="messageBox" *ngFor="let item of messageData">
-    <p class="messageTime">{{item.time}}</p>
+    <p class="messageTime">{{item.messageTime}}</p>
     <ion-card style="margin-top: 10px;">
       <ion-card-header style="margin: -3vh 0;">
         <h4 style="color: #000;">温馨提示</h4>
       </ion-card-header>
       <ion-card-content>
-        {{item.text}}
+        {{item.messageContent}}
       </ion-card-content>
     </ion-card>
   </div>

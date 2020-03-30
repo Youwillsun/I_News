@@ -5,34 +5,34 @@
     <!-- 标题 -->
     <div class="newsTitleBox" style="margin-bottom: 15px;">
       <ion-text>
-        <h1 class="newsTitle" style="margin-bottom: 15px;">{{newsData.title}}</h1>
+        <h1 class="newsTitle" style="margin-bottom: 15px;">{{newsData.newsTile}}</h1>
         <ion-chip color="primary">
-          <ion-label>来源：{{newsData.source}}</ion-label>
+          <ion-label>来源：{{newsData.newsSource}}</ion-label>
         </ion-chip>
         <ion-chip color="primary" style="margin-left: 10px;">
-          <ion-label>时间：{{newsData.date}}</ion-label>
+          <ion-label>时间：{{newsData.newsTime}}</ion-label>
         </ion-chip>
       </ion-text>
     </div>
     <!-- 内容 -->
-    <div class="newsContentBox" [innerHTML]="newsData.content">
+    <div class="newsContentBox" [innerHTML]="newsData.newsContent">
     </div>
     <!-- 浏览收藏量 -->
     <div class="BACBox">
       <div class="browserNum">
         <ion-chip color="primary" outline="true">
           <ion-icon name="eye-outline"></ion-icon>
-          <ion-label style="margin-left:5px" #viewNum>{{newsData.view}}</ion-label>
+          <ion-label style="margin-left:5px" #viewNum>{{newsData.newsViewNum}}</ion-label>
         </ion-chip>
       </div>
       <div class="collectNum">
         <ion-chip color="primary" outline="true" (click)="collectNews()">
           <ion-icon name="heart-circle-outline" #collectIcon></ion-icon>
-          <ion-label style="margin-left:5px" #collect_number>{{newsData.collect}}</ion-label>
+          <ion-label style="margin-left:5px" #collect_number>{{newsData.newsCollectNum}}</ion-label>
         </ion-chip>
       </div>
     </div>
     <!-- 评论组件 -->
-    <app-comment [comment]="newsData.comment"></app-comment>
+    <app-comment [comment]="commentInfo"></app-comment>
   </div>
 </ion-content>

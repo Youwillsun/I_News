@@ -50,7 +50,7 @@ export class ClassSubNewsPage implements OnInit {
           // 如果是最后一次循环
           if (index + 1 === res.length) {
             // 对此数组进行排序
-            DateMethod.dateSort(this.newsData, 'date', 'rev');
+            DateMethod.dateSort(this.newsData, 'newsTime', 'rev');
           }
         });
       } else {

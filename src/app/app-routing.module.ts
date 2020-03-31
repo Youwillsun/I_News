@@ -36,6 +36,14 @@ const routes: Routes = [
   },  {
     path: 'my-collects',
     loadChildren: () => import('./subPages/my-collects/my-collects.module').then( m => m.MyCollectsPageModule)
+  },
+  {
+    path: 'release-news',
+    loadChildren: () => import('./subPages/release-news/release-news.module').then( m => m.ReleaseNewsPageModule)
+  },
+  {
+    path: 'release-msg',
+    loadChildren: () => import('./subPages/release-msg/release-msg.module').then( m => m.ReleaseMsgPageModule)
   }
 
 ];

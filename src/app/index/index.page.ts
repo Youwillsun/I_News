@@ -40,7 +40,7 @@ export class IndexPage implements OnInit {
           }
           if (index + 1 === result.length) {
             // 最后一次循环结束，对数组进行排序
-            DateMethod.dateSort(this.newsData, 'date', 'rev');
+            DateMethod.dateSort(this.newsData, 'newsTime', 'rev');
           }
         });
       } else {

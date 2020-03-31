@@ -38,8 +38,12 @@ export class MessagePage implements OnInit {
           this.ionic.Toast(data.data.msg, "danger", "top");
           this.router.navigate(['/tabs/mine']);
         } else {
-          res.forEach((item: any) => {
+          res.forEach((item: any, index: number) => {
             this.messageData.push(item);
+            if (index + 1 === res.length) {
+              // 对此数组进行排序
+              DateMethod.dateSort(this.messageData, 'messageTime', 'rev');
+            }
           });
         }
       } else {

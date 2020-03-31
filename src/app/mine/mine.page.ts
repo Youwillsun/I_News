@@ -116,6 +116,16 @@ export class MinePage implements OnInit {
     });
   }
 
+  // 去新闻发布页面
+  toReleaseNews(){
+    this.router.navigate(['/release-news']);
+  }
+
+  // 去消息发布页面
+  toReleaseMsg(){
+    this.router.navigate(['/release-msg']);
+  }
+
   // 去完善信息界面
   toUserInfo() {
     this.router.navigate(['/userinfo']);

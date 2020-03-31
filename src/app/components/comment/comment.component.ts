@@ -45,26 +45,40 @@ export class CommentComponent implements OnInit {
 
   // 发表评论
   public publishCom() {
-    // 获取用户的头像和昵称
-    if (this.comment) {
-      this.comment.forEach((item: any) => {
-        this.nickName = item.nickName;
-        this.userPhoto = item.userPhoto;
-        return;
-      });
-    }
     // 发表评论
     if (this.comContent) {
-      this.comment.unshift({ nickName: this.nickName === null || undefined ? '暂无' : this.nickName, userPhoto: this.userPhoto === null || undefined ? "https://s2.ax1x.com/2020/03/03/34B4cF.png" : this.userPhoto, commentContent: this.comContent, commentLikeNum: 0 });
-      // 向后台发送评论数据
-      this.http.post<any>(environment.rootPath + 'publishComment', { commentUserId: this.userId, commentNewsId: this.newsId, commentContent: this.comContent }).subscribe((data: any) => {
+      // 拿到用户的头像和昵称
+      this.http.post(environment.rootPath + 'getUserInfo', { id: this.userId }).subscribe((data: any) => {
         if (data.status === 'success') {
-          // 清空评论
-          this.comContent = null;
-          this.ionic.Toast(data.data.msg, "success", "top");
+          // 判断有没有昵称
+          if (data.data.nickName) {
+            this.nickName = data.data.nickName;
+          } else {
+            this.nickName = '暂无';
+          }
+          // 判断有没有头像
+          if (data.data.userPhoto) {
+            this.userPhoto = data.data.userPhoto;
+          } else {
+            this.userPhoto = "https://s2.ax1x.com/2020/03/03/34B4cF.png";
+          }
+          // 发表评论
+          this.comment.unshift({ nickName: this.nickName, userPhoto: this.userPhoto, commentContent: this.comContent, commentLikeNum: 0 });
+          // 向后台发送评论数据
+          this.http.post<any>(environment.rootPath + 'publishComment', { commentUserId: this.userId, commentNewsId: this.newsId, commentContent: this.comContent }).subscribe((data: any) => {
+            if (data.status === 'success') {
+              // 清空评论
+              this.comContent = null;
+              this.ionic.Toast(data.data.msg, "success", "top");
+            } else {
+              this.ionic.Toast(data.data.msg, "danger", "top");
+            }
+          });
         } else {
-          this.ionic.Toast(data.data.msg, "danger", "top");
+          this.ionic.Toast('评论失败', "danger", "top");
         }
+      }, err => {
+        throw new Error(err);
       });
     } else {
       this.ionic.Toast('不能发表空评论！', 'danger', 'top', 1000);

@@ -1,0 +1,11 @@
+.newsImgBox img {
+    width: 100% !important;
+    height: 25vh;
+}
+
+ion-card-content {
+    height: 5vh;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

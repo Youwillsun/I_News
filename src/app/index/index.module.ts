@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { IndexPage } from './index.page';
 import { HeaderModule } from '../components/header/header.module';
+import { NewsModule } from '../components/news/news.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { HeaderModule } from '../components/header/header.module';
     FormsModule,
     IonicModule,
     HeaderModule,
+    NewsModule,
     RouterModule.forChild([{ path: '', component: IndexPage }])
   ],
   declarations: [IndexPage]

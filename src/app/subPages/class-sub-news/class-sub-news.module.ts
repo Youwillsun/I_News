@@ -8,6 +8,7 @@ import { ClassSubNewsPageRoutingModule } from './class-sub-news-routing.module';
 
 import { ClassSubNewsPage } from './class-sub-news.page';
 import { HeaderModule } from 'src/app/components/header/header.module';
+import { NewsModule } from 'src/app/components/news/news.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { HeaderModule } from 'src/app/components/header/header.module';
     FormsModule,
     IonicModule,
     HeaderModule,
+    NewsModule,
     ClassSubNewsPageRoutingModule
   ],
   declarations: [ClassSubNewsPage]

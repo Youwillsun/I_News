@@ -1,19 +1,5 @@
 <app-header [title]="title"></app-header>
 
 <ion-content>
-  <div *ngFor="let item of newsData">
-    <ion-card (click)="toNewsDetail(item.newsId)">
-      <div class="newsImgBox" *ngIf="item.newsThumbnail">
-        <img [src]="item.newsThumbnail" />
-      </div>
-      <ion-card-header>
-        <ion-card-subtitle>{{item.newsSource}}：{{item.newsTime}}</ion-card-subtitle>
-        <ion-card-title>
-          <h4 style="font-weight: bold;margin-bottom: 0;">{{item.newsTile}}</h4>
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>{{item.newsSummary}}</ion-card-content>
-    </ion-card>
-  </div>
-
+  <app-news [newsData]="newsData"></app-news>
 </ion-content>

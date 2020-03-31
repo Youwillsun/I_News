@@ -62,9 +62,4 @@ export class ClassSubNewsPage implements OnInit {
     });
   }
 
-  // 去新闻详情页
-  toNewsDetail(id: string) {
-    this.router.navigate(['/newsDetails', { id }]);
-  }
-
 }

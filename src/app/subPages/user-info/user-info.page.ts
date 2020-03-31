@@ -5,6 +5,7 @@ import { CommonDataService } from '../../share/service/common-data.service';
 import { environment } from 'src/environments/environment';
 import { VariableService } from 'src/app/share/service/variable.service';
 import { IonicService } from 'src/app/share/service/ionic.service';
+import { INEncrypt } from 'src/app/share/class/INEncrypt';
 
 @Component({
   selector: 'app-user-info',
@@ -48,7 +49,7 @@ export class UserInfoPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userId = window.localStorage.getItem('userId');
+    this.userId = INEncrypt.basicDecrypt(window.localStorage.getItem('userId'));
     // 调用修改出生日期函数
     this.changeBirthday();
     // 调用获取默认值函数

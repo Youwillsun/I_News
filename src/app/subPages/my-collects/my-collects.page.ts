@@ -3,6 +3,7 @@ import { IonicService } from 'src/app/share/service/ionic.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { INEncrypt } from 'src/app/share/class/INEncrypt';
 
 @Component({
   selector: 'app-my-collects',
@@ -27,7 +28,7 @@ export class MyCollectsPage implements OnInit {
 
   ngOnInit() {
     // 获取userId
-    this.userId = window.localStorage.getItem('userId');
+    this.userId = INEncrypt.basicDecrypt(window.localStorage.getItem('userId'));
     // 获取我的收藏
     this.fetchMyCollect();
   }

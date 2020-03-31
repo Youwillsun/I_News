@@ -1,6 +1,20 @@
 <app-header [title]="title"></app-header>
 
 <ion-content>
+  <!-- 发布新闻或消息通知 -->
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge *ngIf="administrator">
+    <ion-fab-button size="small">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button color="light">
+        <ion-icon name="newspaper-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="notifications-circle-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
   <!-- 个人信息卡片 -->
   <ion-card>
     <ion-item>

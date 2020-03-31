@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { IonicService } from 'src/app/share/service/ionic.service';
+import { INEncrypt } from 'src/app/share/class/INEncrypt';
 
 @Component({
   selector: 'app-news-detail',
@@ -41,7 +42,7 @@ export class NewsDetailPage implements OnInit {
       this.newsId = data.id;
     });
     // 获取userId
-    this.userId = window.localStorage.getItem('userId');
+    this.userId = INEncrypt.basicDecrypt(window.localStorage.getItem('userId'));
     // 获取数据
     this.fetchNDData();
     //判断此用户是否收藏了此新闻

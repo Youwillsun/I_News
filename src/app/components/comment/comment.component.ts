@@ -3,6 +3,7 @@ import { IonicService } from 'src/app/share/service/ionic.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
+import { INEncrypt } from 'src/app/share/class/INEncrypt';
 
 @Component({
   selector: 'app-comment',
@@ -20,6 +21,10 @@ export class CommentComponent implements OnInit {
   public userId: string;
   // 存储新闻id
   public newsId: string;
+  // 存储用户昵称
+  public nickName: string;
+  // 存储用户头像
+  public userPhoto: string;
 
   constructor(
     public ionic: IonicService,
@@ -29,9 +34,9 @@ export class CommentComponent implements OnInit {
 
   ngOnInit() {
     // 获取用户id
-    this.userId = window.localStorage.getItem('userId');
+    this.userId = INEncrypt.basicDecrypt(window.localStorage.getItem('userId'));
     // 获取newsId
-    this.route.params.subscribe((data:any)=>{
+    this.route.params.subscribe((data: any) => {
       this.newsId = data.id;
     });
     // 获取用户点赞的评论
@@ -40,10 +45,17 @@ export class CommentComponent implements OnInit {
 
   // 发表评论
   public publishCom() {
+    // 获取用户的头像和昵称
+    if (this.comment) {
+      this.comment.forEach((item: any) => {
+        this.nickName = item.nickName;
+        this.userPhoto = item.userPhoto;
+        return;
+      });
+    }
+    // 发表评论
     if (this.comContent) {
-      // 获取昵称
-      let nickName = window.localStorage.getItem('nickName');
-      this.comment.unshift({ nickName: nickName === null || undefined ? '暂无' : nickName, userPhoto: "https://s2.ax1x.com/2020/03/03/34B4cF.png", commentContent: this.comContent, commentLikeNum: 0 });
+      this.comment.unshift({ nickName: this.nickName === null || undefined ? '暂无' : this.nickName, userPhoto: this.userPhoto === null || undefined ? "https://s2.ax1x.com/2020/03/03/34B4cF.png" : this.userPhoto, commentContent: this.comContent, commentLikeNum: 0 });
       // 向后台发送评论数据
       this.http.post<any>(environment.rootPath + 'publishComment', { commentUserId: this.userId, commentNewsId: this.newsId, commentContent: this.comContent }).subscribe((data: any) => {
         if (data.status === 'success') {

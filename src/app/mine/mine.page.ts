@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { CommonDataService } from '../share/service/common-data.service';
 import { environment } from 'src/environments/environment';
 import { IonicService } from '../share/service/ionic.service';
+import { INEncrypt } from '../share/class/INEncrypt';
 
 @Component({
   selector: 'app-mine',
@@ -29,6 +30,8 @@ export class MinePage implements OnInit {
   public userPhoto: string;
   // 默认头像
   public defaultUserPhoto: string = 'https://s2.ax1x.com/2020/03/03/34B4cF.png';
+  // 是否为管理员
+  public administrator: boolean = false;
 
   constructor(
     public router: Router,
@@ -50,11 +53,16 @@ export class MinePage implements OnInit {
 
   ngOnInit() {
     // 从本地中获取用户id
-    this.userId = window.localStorage.getItem('userId');
+    this.userId = INEncrypt.basicDecrypt(window.localStorage.getItem('userId'));
     // 调用个人信息函数
     this.userInfo();
     // 调用消息数量函数
     this.messageNum();
+    // 判断用户是否为管理员
+    let account = INEncrypt.basicDecrypt(window.localStorage.getItem('account'));
+    if (account === '15515182060') {
+      this.administrator = true;
+    }
   }
 
   // 获取个人信息
@@ -74,8 +82,6 @@ export class MinePage implements OnInit {
         } else {
           this.nickName = res.nickName;
         }
-        // 存储昵称
-        window.localStorage.setItem('nickName', this.nickName);
 
         // 个性签名
         if (!res.introduction) {
@@ -116,7 +122,7 @@ export class MinePage implements OnInit {
   }
 
   // 去我的收藏界面
-  toMyCollect(){
+  toMyCollect() {
     this.router.navigate(['/my-collects']);
   }
 

@@ -89,7 +89,7 @@ export class LoginPage implements OnInit {
             window.localStorage.setItem('account', INEncrypt.basicEncrypt(this.loginAccount));
             window.localStorage.setItem('password', INEncrypt.basicEncrypt(this.loginPwd));
             // 存储userid
-            window.localStorage.setItem('userId', this.userId);
+            window.localStorage.setItem('userId', INEncrypt.basicEncrypt(this.userId));
             // 跳转到首页
             this.router.navigate(['/tabs']);
           }, 1500);

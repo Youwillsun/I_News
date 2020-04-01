@@ -26,6 +26,9 @@ export class CommentComponent implements OnInit {
   // 存储用户头像
   public userPhoto: string;
 
+  // 用户评论内容备份【点赞要用】
+  public comContentBackUp: string;
+
   constructor(
     public ionic: IonicService,
     public http: HttpClient,
@@ -47,6 +50,8 @@ export class CommentComponent implements OnInit {
   public publishCom() {
     // 发表评论
     if (this.comContent) {
+      // 备份评论内容
+      this.comContentBackUp = this.comContent;
       // 拿到用户的头像和昵称
       this.http.post(environment.rootPath + 'getUserInfo', { id: this.userId }).subscribe((data: any) => {
         if (data.status === 'success') {
@@ -105,7 +110,7 @@ export class CommentComponent implements OnInit {
               }
             });
           })
-        }
+        } else { }
       } else {
         this.ionic.Toast(data.data.msg, "danger", "top");
       }
@@ -125,6 +130,34 @@ export class CommentComponent implements OnInit {
     let iconDom = document.getElementsByClassName('likeIcon');
     // 点赞数字的dom
     let likeDom = document.getElementsByClassName('likeNum');
+    // 判断是否为新的评论
+    if (commentId) {
+      // 发送
+      this.likeSendMsg(commentId, iconDom, likeDom, index);
+    } else {
+      // 调用接口获取评论的id
+      this.http.post(environment.rootPath + 'getUserThisComment', { commentUserId: this.userId, commentNewsId: this.newsId, commentContent: this.comContentBackUp }).subscribe((data: any) => {
+        if (data.status === 'success') {
+          commentId = data.data;
+          // 发送
+          this.likeSendMsg(commentId, iconDom, likeDom, index);
+        } else {
+          this.ionic.Toast(data.data.msg, "danger", "top");
+        }
+      }, err => {
+        throw new Error(err);
+      });
+    }
+  }
+
+  /**
+   * 向后台发送点赞消息
+   * @param commentId 评论的id
+   * @param iconDom 点赞图标的dom
+   * @param likeDom 点赞数字的dom
+   * @param index dom元素序号
+   */
+  likeSendMsg(commentId: string, iconDom: any, likeDom: any, index: number) {
     // 如果没有对这评论点过赞
     if (iconDom[index].getAttribute('name') === 'thumbs-up-outline') {
       // 调用点赞接口

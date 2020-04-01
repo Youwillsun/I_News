@@ -1,5 +1,15 @@
 <app-header [title]="title" [backButton]="backButton"></app-header>
 
 <ion-content>
-
+    <ion-list lines="none">
+        <!-- 消息内容 -->
+        <ion-item>
+            <ion-label position="stacked">消息通知<ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-textarea spellcheck="true" rows="6" cols="20" placeholder="请填写消息通知内容[100字以内]" [(ngModel)]="msgContent" maxlength="100"></ion-textarea>
+        </ion-item>
+    </ion-list>
+    <div class="btn">
+        <ion-button expand="block" fill="outline" shape="round" (click)="releaseMsg()">发布</ion-button>
+    </div>
 </ion-content>

@@ -12,6 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { NgxEchartsModule } from 'ngx-echarts';
 
+import { QuillModule } from 'ngx-quill';
+
 import { AppComponent } from './app.component';
 
 
@@ -24,6 +26,7 @@ import { AppComponent } from './app.component';
     NgxEchartsModule,
     FormsModule,
     HttpClientModule,
+    QuillModule.forRoot(),
     IonicModule.forRoot({ mode: 'ios' })
   ],
   providers: [

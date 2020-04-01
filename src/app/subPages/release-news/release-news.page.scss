@@ -1,0 +1,28 @@
+ion-content {
+    --padding-end: 15px;
+    --padding-start: 15px;
+}
+
+.label-stacked.sc-ion-label-ios-h {
+    font-size: 16px;
+    color: #000;
+}
+
+ion-list{
+    margin-bottom: 10px;
+}
+
+ion-item {
+    --padding-start: 0;
+}
+
+.editor {
+    height: 150px;
+    .newsDetailBox{
+        margin: 15px 0 5px 0;
+    }
+}
+
+.btn {
+    margin-top: 90px;
+}

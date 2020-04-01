@@ -8,6 +8,7 @@ import { ReleaseNewsPageRoutingModule } from './release-news-routing.module';
 
 import { ReleaseNewsPage } from './release-news.page';
 import { HeaderModule } from 'src/app/components/header/header.module';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   imports: [
@@ -15,8 +16,9 @@ import { HeaderModule } from 'src/app/components/header/header.module';
     FormsModule,
     IonicModule,
     HeaderModule,
+    QuillModule,
     ReleaseNewsPageRoutingModule
   ],
   declarations: [ReleaseNewsPage]
 })
-export class ReleaseNewsPageModule {}
+export class ReleaseNewsPageModule { }

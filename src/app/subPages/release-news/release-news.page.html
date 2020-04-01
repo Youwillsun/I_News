@@ -1,5 +1,49 @@
 <app-header [title]="title" [backButton]="backButton"></app-header>
 
 <ion-content>
-
+    <ion-list lines="inset">
+        <!-- 新闻标题 -->
+        <ion-item>
+            <ion-label position="stacked">标题<ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input placeholder="请填写新闻标题" [(ngModel)]="parameter.newsTile"></ion-input>
+        </ion-item>
+        <!-- 新闻来源 -->
+        <ion-item>
+            <ion-label position="stacked">来源<ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input placeholder="请填写新闻来源" [(ngModel)]="parameter.newsSource"></ion-input>
+        </ion-item>
+        <!-- 简介 -->
+        <ion-item>
+            <ion-label position="stacked">简介<ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input placeholder="请填写新闻简介" [(ngModel)]="parameter.newsSummary"></ion-input>
+        </ion-item>
+        <!-- 缩略图网址 -->
+        <ion-item>
+            <ion-label position="stacked">缩略图</ion-label>
+            <ion-input placeholder="请填写新闻缩略图链接" [(ngModel)]="parameter.newsThumbnail"></ion-input>
+        </ion-item>
+        <!-- 新闻类别 -->
+        <ion-item>
+            <ion-label>所属类别<ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-select cancelText="取消" okText="确定" (ionChange)="selectNewsClass($event)">
+                <ion-select-option *ngFor="let item of newsClassData" [value]="item._id">{{item.newsClassName}}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    <!-- 新闻详情 -->
+    <div class="editor">
+        <div class="newsDetailBox">
+            <ion-label position="stacked">新闻详情<ion-text color="danger">*</ion-text>
+            </ion-label>
+        </div>
+        <quill-editor [modules]="quillConfig" [style]="{height: '150px'}" [(ngModel)]="parameter.newsContent" placeholder="请填写新闻详情"></quill-editor>
+    </div>
+    <div class="btn">
+        <ion-button expand="block" fill="outline" shape="round" (click)="releaseNews()">发布</ion-button>
+    </div>
 </ion-content>

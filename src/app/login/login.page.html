@@ -6,16 +6,18 @@
     </div>
     <!-- 登录表单 -->
     <div class="form">
-      <!-- 账号 -->
-      <ion-item lines="inset">
-        <ion-label position="floating" color="dark">账号</ion-label>
-        <ion-input required type="text" [(ngModel)]="loginAccount"></ion-input>
-      </ion-item>
-      <!-- 密码 -->
-      <ion-item lines="inset">
-        <ion-label position="floating" color="dark">密码</ion-label>
-        <ion-input required type="password" [(ngModel)]="loginPwd"></ion-input>
-      </ion-item>
+      <ion-list>
+        <!-- 账号 -->
+        <ion-item lines="inset">
+          <ion-label position="floating" color="dark">账号</ion-label>
+          <ion-input required type="text" [(ngModel)]="loginAccount"></ion-input>
+        </ion-item>
+        <!-- 密码 -->
+        <ion-item lines="inset">
+          <ion-label position="floating" color="dark">密码</ion-label>
+          <ion-input required type="password" [(ngModel)]="loginPwd"></ion-input>
+        </ion-item>
+      </ion-list>
       <div style="text-align: right;">
         <p>没有账号？<a href="javascript:void(0)" (click)="registerPage()" style="text-decoration: none;">点击注册！</a></p>
       </div>
@@ -50,7 +52,8 @@
       </ion-item>
       <ion-item lines="none" style="margin-top: 10px;">
         <ion-checkbox color="primary" checked slot="start" (ionChange)="agreement()"></ion-checkbox>
-        <span class="agreement">我已阅读并同意<a href="javascript:void(0)">爱看新闻团队用户协议</a>和<a href="javascript:void(0)">爱看新闻团队APP公约</a></span>
+        <span class="agreement">我已阅读并同意<a href="javascript:void(0)">爱看新闻团队用户协议</a>和<a
+            href="javascript:void(0)">爱看新闻团队APP公约</a></span>
       </ion-item>
     </div>
     <!-- 注册按钮 -->

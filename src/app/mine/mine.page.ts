@@ -29,7 +29,7 @@ export class MinePage implements OnInit {
   // 存储用户头像
   public userPhoto: string;
   // 默认头像
-  public defaultUserPhoto: string = 'https://s2.ax1x.com/2020/03/03/34B4cF.png';
+  public defaultUserPhoto: string = 'assets/images/defaultUserPhoto.png';
   // 是否为管理员
   public administrator: boolean = false;
 

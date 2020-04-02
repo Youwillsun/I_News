@@ -83,24 +83,21 @@ export class LoginPage implements OnInit {
           this.userId = data.data.id;
           // 提示用户登录成功
           this.ionic.Toast('登录成功', "success", "top");
-          // 登录成功消失，进入首页
-          setTimeout(() => {
-            // 成功登录 在本地存储中存储账号密码
-            window.localStorage.setItem('account', INEncrypt.basicEncrypt(this.loginAccount));
-            window.localStorage.setItem('password', INEncrypt.basicEncrypt(this.loginPwd));
-            // 存储userid
-            window.localStorage.setItem('userId', INEncrypt.basicEncrypt(this.userId));
-            // 跳转到首页
-            this.router.navigate(['/tabs']);
-          }, 1500);
+          // 在本地存储中存储账号密码
+          window.localStorage.setItem('account', INEncrypt.basicEncrypt(this.loginAccount));
+          window.localStorage.setItem('password', INEncrypt.basicEncrypt(this.loginPwd));
+          // 存储userid
+          window.localStorage.setItem('userId', INEncrypt.basicEncrypt(this.userId));
+          // 跳转到首页
+          this.router.navigate(['/tabs']);
         } else {
-          this.ionic.Toast('账号或密码有误，请检查！', 'danger', "top");
+          this.ionic.Toast(data.data.msg, 'danger', "top");
         }
       }, err => {
         throw new Error(err);
       });
     } else {
-      this.ionic.Toast('账号或密码有误，请检查！', 'danger', "top");
+      this.ionic.Toast('请输入账号和密码！', 'danger', "top");
     }
   }
 

@@ -1,0 +1,27 @@
+.noDataBox {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 20vh;
+
+    .flexBox {
+        width: 20vw;
+        height: 30vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        ion-img {
+            width: 120px;
+            height: 150px;
+        }
+
+        ion-text {
+            p {
+                font-size: 15px;
+            }
+        }
+    }
+}

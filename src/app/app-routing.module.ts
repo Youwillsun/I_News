@@ -11,10 +11,6 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: '',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
-  },
-  {
     path: 'newsDetails',
     loadChildren: () => import('./subPages/news-detail/news-detail.module').then(m => m.NewsDetailPageModule)
   },
@@ -27,24 +23,33 @@ const routes: Routes = [
     loadChildren: () => import('./subPages/user-info/user-info.module').then(m => m.UserInfoPageModule)
   },
   {
-    path:'message',
+    path: 'message',
     loadChildren: () => import('./subPages/message/message.module').then(m => m.MessagePageModule)
   },
   {
     path: 'contact',
-    loadChildren: () => import('./subPages/contact/contact.module').then( m => m.ContactPageModule)
-  },  {
+    loadChildren: () => import('./subPages/contact/contact.module').then(m => m.ContactPageModule)
+  },
+  {
     path: 'my-collects',
-    loadChildren: () => import('./subPages/my-collects/my-collects.module').then( m => m.MyCollectsPageModule)
+    loadChildren: () => import('./subPages/my-collects/my-collects.module').then(m => m.MyCollectsPageModule)
   },
   {
     path: 'release-news',
-    loadChildren: () => import('./subPages/release-news/release-news.module').then( m => m.ReleaseNewsPageModule)
+    loadChildren: () => import('./subPages/release-news/release-news.module').then(m => m.ReleaseNewsPageModule)
   },
   {
     path: 'release-msg',
-    loadChildren: () => import('./subPages/release-msg/release-msg.module').then( m => m.ReleaseMsgPageModule)
-  }
+    loadChildren: () => import('./subPages/release-msg/release-msg.module').then(m => m.ReleaseMsgPageModule)
+  },
+  {
+    path: '',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+  },  {
+    path: 'app-protocol',
+    loadChildren: () => import('./subPages/app-protocol/app-protocol.module').then( m => m.AppProtocolPageModule)
+  },
+
 
 ];
 @NgModule({

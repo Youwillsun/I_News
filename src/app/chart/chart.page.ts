@@ -91,7 +91,8 @@ export class ChartPage implements OnInit {
                 name: '新闻数量',
                 type: 'bar',
                 data: newClassNumber
-              }, {
+              },
+              {
                 name: '新闻数量',
                 type: 'line',
                 data: newClassNumber,
@@ -125,7 +126,6 @@ export class ChartPage implements OnInit {
       } else {
         this.ionic.Toast(data.data.msg, "danger", "top");
       }
-
     }, err => {
       throw new Error(err);
     });

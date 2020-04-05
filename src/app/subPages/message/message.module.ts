@@ -8,6 +8,7 @@ import { MessagePageRoutingModule } from './message-routing.module';
 
 import { MessagePage } from './message.page';
 import { HeaderModule } from 'src/app/components/header/header.module';
+import { NodataModule } from 'src/app/components/nodata/nodata.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { HeaderModule } from 'src/app/components/header/header.module';
     FormsModule,
     IonicModule,
     HeaderModule,
+    NodataModule,
     MessagePageRoutingModule
   ],
   declarations: [MessagePage]

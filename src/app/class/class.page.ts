@@ -15,6 +15,9 @@ export class ClassPage implements OnInit {
   // 存储newsClass数据
   public newsClassData = [];
 
+  // 是否显示缺省图
+  public dataJudge:boolean = false;
+
   constructor(
     public router: Router,
     public http: HttpClient,
@@ -31,7 +34,7 @@ export class ClassPage implements OnInit {
       if (data.status === 'success') {
         this.newsClassData = data.data;
       } else {
-        this.ionic.Toast(data.data.msg,"danger","top");
+        this.dataJudge = true;
       }
     }, err => {
       throw new Error(err);

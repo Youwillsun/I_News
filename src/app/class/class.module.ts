@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { ClassPage } from './class.page';
 
 import { HeaderModule } from '../components/header/header.module';
+import { NodataModule } from '../components/nodata/nodata.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { HeaderModule } from '../components/header/header.module';
     FormsModule,
     IonicModule,
     HeaderModule,
+    NodataModule,
     RouterModule.forChild([{ path: '', component: ClassPage }])
   ],
   declarations: [ClassPage]

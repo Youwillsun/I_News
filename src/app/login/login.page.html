@@ -31,7 +31,7 @@
   <ion-content *ngIf="!isLogin">
     <div class="registerTitle">
       <h1>注册</h1>
-      <p>已有账号？<a href="javascript:void(0)" (click)="loginPage()">点击登录！</a></p>
+      <p>已有账号？<a href="javascript:void(0)" (click)="loginPage()" style="text-decoration: none;">点击登录！</a></p>
     </div>
     <!-- 注册表单 -->
     <div class="form">
@@ -53,8 +53,7 @@
         </ion-item>
         <ion-item lines="none" style="margin-top: 10px;">
           <ion-checkbox color="primary" checked slot="start" (ionChange)="agreement()"></ion-checkbox>
-          <span class="agreement">我已阅读并同意<a href="javascript:void(0)">爱看新闻团队用户协议</a>和<a
-              href="javascript:void(0)">爱看新闻团队APP公约</a></span>
+          <span class="agreement">我已阅读并同意<a [routerLink]="[ '/app-protocol']">爱看新闻隐私政策</a></span>
         </ion-item>
       </ion-list>
     </div>

@@ -19,6 +19,8 @@ export class ClassSubNewsPage implements OnInit {
   public newsClassId: string;
   // 存储新闻数据
   public newsData = [];
+  // 判断是否显示无数据缺省图
+  public dataJudge: boolean = false;
 
   constructor(
     public router: Router,
@@ -54,8 +56,7 @@ export class ClassSubNewsPage implements OnInit {
           }
         });
       } else {
-        this.ionic.Toast(data.data.msg, 'danger', "top");
-        this.router.navigate(['/tabs/class']);
+        this.dataJudge = true;
       }
     }, err => {
       throw new Error(err);

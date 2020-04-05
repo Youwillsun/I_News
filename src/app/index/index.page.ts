@@ -17,6 +17,9 @@ export class IndexPage implements OnInit {
   // 首页标题
   public title = '热点新闻';
 
+  // 是否显示缺省图
+  public dataJudge: boolean = false;
+
   constructor(
     public router: Router,
     public http: HttpClient,
@@ -44,7 +47,7 @@ export class IndexPage implements OnInit {
           }
         });
       } else {
-        this.ionic.Toast(data.data.msg, "danger", "top");
+        this.dataJudge = true;
       }
     }, err => {
       throw new Error(err);

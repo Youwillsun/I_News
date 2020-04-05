@@ -20,6 +20,9 @@ export class MyCollectsPage implements OnInit {
   // 存储userId
   public userId: string;
 
+  // 是否显示缺省图
+  public dataJudge: boolean = false;
+
   constructor(
     public http: HttpClient,
     public ionic: IonicService,
@@ -39,9 +42,8 @@ export class MyCollectsPage implements OnInit {
     this.http.post<any>(environment.rootPath + 'getUserCollectNews', { userId: this.userId }).subscribe((data: any) => {
       if (data.status === 'success') {
         // 如果收藏为空
-        if(data.data.length === 0){
-          this.ionic.Toast('暂无收藏的新闻', "danger", "top");
-          this.router.navigate(['/tabs/mine']);
+        if (data.data.length === 0) {
+          this.dataJudge = true;
         } else {
           this.newsData = data.data;
         }

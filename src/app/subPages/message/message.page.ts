@@ -18,6 +18,9 @@ export class MessagePage implements OnInit {
   // 存储消息数据
   public messageData = [];
 
+  // 是否显示缺省图
+  public dataJudge:boolean = false;
+
   constructor(
     public http: HttpClient,
     public ionic: IonicService,
@@ -35,8 +38,7 @@ export class MessagePage implements OnInit {
       if (data.status === 'success') {
         let res = data.data;
         if (res.length === 0) {
-          this.ionic.Toast(data.data.msg, "danger", "top");
-          this.router.navigate(['/tabs/mine']);
+          this.dataJudge = true;
         } else {
           res.forEach((item: any, index: number) => {
             this.messageData.push(item);

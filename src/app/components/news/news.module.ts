@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { NewsComponent } from './news.component'
+import { NewsComponent } from './news.component';
 
 
 

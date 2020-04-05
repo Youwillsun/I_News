@@ -2,4 +2,5 @@
 
 <ion-content>
   <app-news [newsData]="newsData"></app-news>
+  <app-nodata *ngIf="dataJudge"></app-nodata>
 </ion-content>

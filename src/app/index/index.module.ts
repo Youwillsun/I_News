@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { IndexPage } from './index.page';
 import { HeaderModule } from '../components/header/header.module';
 import { NewsModule } from '../components/news/news.module';
+import { NodataModule } from '../components/nodata/nodata.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { NewsModule } from '../components/news/news.module';
     IonicModule,
     HeaderModule,
     NewsModule,
+    NodataModule,
     RouterModule.forChild([{ path: '', component: IndexPage }])
   ],
   declarations: [IndexPage]

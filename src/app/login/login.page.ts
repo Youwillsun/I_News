@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { AlertController } from '@ionic/angular';
 import { IonicService } from '../share/service/ionic.service';
 // 引入加解密算法
 import { INEncrypt } from '../share/class/INEncrypt';
 import { environment } from 'src/environments/environment';
-
 
 @Component({
   selector: 'app-login',
@@ -22,6 +22,13 @@ export class LoginPage implements OnInit {
   // 存储登录页面密码
   public loginPwd: string;
 
+  // 存储修改弹窗的账号
+  public changeAccount: string;
+  // 存储修改弹窗的密码
+  public changePwd: string;
+  // 存储储修改弹窗二次确认的密码
+  public confirmChangePwd: string;
+
   // 存储注册页面账号
   public registerAccount: string;
   // 存储注册页面mima:
@@ -37,7 +44,8 @@ export class LoginPage implements OnInit {
   constructor(
     public router: Router,
     public http: HttpClient,
-    public ionic: IonicService
+    public ionic: IonicService,
+    public alertController: AlertController,
   ) { }
 
   ngOnInit() {
@@ -146,5 +154,77 @@ export class LoginPage implements OnInit {
     } else {
       this.ionic.Toast("请同意爱看新闻团队协议！", "danger", "top")
     }
+  }
+
+  // 修改密码
+  async updatedPwd() {
+    const alert = await this.alertController.create({
+      header: '修改密码',
+      animated: true,
+      inputs: [
+        {
+          name: 'account',
+          type: 'text',
+          id: 'account',
+          value: this.changeAccount,
+          placeholder: '请输入您的账号'
+        },
+        {
+          name: 'pwd',
+          type: 'text',
+          id: 'pwd',
+          value: this.changePwd,
+          placeholder: '请输入您的密码'
+        },
+        {
+          name: 'confirmPwd',
+          type: 'text',
+          id: 'confirmPwd',
+          value: this.confirmChangePwd,
+          placeholder: '请确认您的密码'
+        }
+      ],
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel'
+        }, {
+          text: '确认',
+          handler: (data: any) => {
+            // 手机号判断正则
+            const phoneRegExp = new RegExp('^[0-9]{11}$');
+            // 密码判断正则
+            const pwdRegExp = new RegExp('^[A-Za-z0-9]{6,12}$');
+            // 如果账号密码不为空
+            if (data.account && data.pwd && data.confirmPwd) {
+              // 如果账号和密码格式验证通过
+              if (phoneRegExp.test(data.account) && pwdRegExp.test(data.confirmPwd)) {
+                // 两次账号密码一致
+                if (data.pwd === data.confirmPwd) {
+                  // 向后台发送数据
+                  this.http.post<any>(environment.rootPath + 'updatedPwd', { account: data.account, password: data.confirmPwd }).subscribe((response: any) => {
+                    if (response.status === "success") {
+                      this.ionic.Toast(response.data.msg, "success", "top");
+                    } else {
+                      this.ionic.Toast(response.data.msg, "danger", "top", 2000);
+                    }
+                  });
+                } else {
+                  this.ionic.Toast("两次密码不一致，请检查！", 'danger', 'top', 1000);
+                  return false;
+                }
+              } else {
+                this.ionic.Toast("账号或密码格式有误，请检查！", 'danger', 'top', 1000);
+                return false;
+              }
+            } else {
+              this.ionic.Toast("账号或密码为空，请检查！", 'danger', 'top', 1000);
+              return false;
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

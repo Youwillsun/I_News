@@ -66,7 +66,6 @@ export class AppComponent {
     this.router.events.subscribe(event => { // 需要放到最后一个执行
       if (event instanceof NavigationEnd) {
         this.url = event.url;
-        console.log(this.url);
       }
     });
   }

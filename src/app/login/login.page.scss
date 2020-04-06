@@ -1,41 +1,66 @@
-.container{
+.container {
     padding: 0 6vw 0 6vw;
     background-color: rgb(255, 255, 255);
 }
-ion-content{
+
+ion-content {
     --background: rgb(255, 255, 255);
 }
-.loginTitle{
+
+.loginTitle {
     margin-top: 20vh;
     margin-bottom: 5vh;
 }
 
-.form{
+.form {
     margin-left: -4vw !important;
 }
 
-ion-item{
-    --background:rgb(255, 255, 255);
+ion-item {
+    --background: rgb(255, 255, 255);
 }
 
-.registerTitle{
+.registerTitle {
     margin-top: 15vh;
 }
 
-.loginBtn{
+// 用户登录
+.userFunBox {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 25px;
+
+    // 找回密码
+    .updatedPwd {
+        a {
+            text-decoration: none;
+        }
+    }
+
+    // 点击注册
+    .toRegister {
+        a {
+            text-decoration: none;
+        }
+    }
+}
+
+.loginBtn {
     margin-top: 10vh;
     cursor: pointer;
 }
 
-ion-checkbox{
+ion-checkbox {
     margin-right: 5px;
 }
 
-.agreement{
+.agreement {
     font-size: 13px;
     letter-spacing: 1px;
     margin-left: 5px;
-    a{
+
+    a {
         font-weight: bold;
         text-decoration: none;
     }

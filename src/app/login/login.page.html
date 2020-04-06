@@ -18,8 +18,9 @@
           <ion-input required type="password" [(ngModel)]="loginPwd"></ion-input>
         </ion-item>
       </ion-list>
-      <div style="text-align: right;">
-        <p>没有账号？<a href="javascript:void(0)" (click)="registerPage()" style="text-decoration: none;">点击注册！</a></p>
+      <div class="userFunBox">
+        <p class="updatedPwd"><a href="javascript:void(0)" (click)="updatedPwd()">修改密码</a></p>
+        <p class="toRegister">没有账号？<a href="javascript:void(0)" (click)="registerPage()">点击注册！</a></p>
       </div>
     </div>
     <!-- 登录按钮 -->

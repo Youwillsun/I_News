@@ -161,7 +161,7 @@ export class CommentComponent implements OnInit {
     // 如果没有对这评论点过赞
     if (iconDom[index].getAttribute('name') === 'thumbs-up-outline') {
       // 调用点赞接口
-      this.http.post<any>(environment.rootPath + 'thumbUpNews', { userId: this.userId, newsId: this.newsId, commentId: commentId }).subscribe((data: any) => {
+      this.http.post<any>(environment.rootPath + 'likeComments', { userId: this.userId, newsId: this.newsId, commentId: commentId }).subscribe((data: any) => {
         if (data.status === 'success') {
           // 让点赞数量+1
           let num = Number(likeDom[index].innerHTML) + 1;
@@ -178,7 +178,7 @@ export class CommentComponent implements OnInit {
       });
     } else {
       // 取消点赞的接口
-      this.http.post<any>(environment.rootPath + 'thumbUpNews/cancelThumbUp', { userId: this.userId, newsId: this.newsId, commentId: commentId }).subscribe((data: any) => {
+      this.http.post<any>(environment.rootPath + 'likeComments/cancelLike', { userId: this.userId, newsId: this.newsId, commentId: commentId }).subscribe((data: any) => {
         if (data.status === 'success') {
           // 让点赞数量-1
           let num = Number(likeDom[index].innerHTML) - 1;

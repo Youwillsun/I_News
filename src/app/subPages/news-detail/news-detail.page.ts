@@ -27,6 +27,9 @@ export class NewsDetailPage implements OnInit {
   // 存储comment数据
   public commentInfo = [];
 
+  // 存储新闻浏览量
+  public newsViewNum: number;
+
   // 存储userId
   public userId: string;
 
@@ -47,6 +50,8 @@ export class NewsDetailPage implements OnInit {
     this.fetchNDData();
     //判断此用户是否收藏了此新闻
     this.userCollectJudge();
+    // 增加新闻浏览量
+    this.addNewsView();
   }
 
   // 获取新闻详情数据
@@ -57,6 +62,19 @@ export class NewsDetailPage implements OnInit {
         this.commentInfo = data.data.commentInfo;
       } else {
         this.ionic.Toast(data.data.msg, "danger", "top");
+      }
+    }, err => {
+      throw new Error(err);
+    });
+  }
+
+  // 增加新闻浏览量
+  addNewsView() {
+    this.http.post(environment.rootPath + 'addNewsView', { newsId: this.newsId }).subscribe((data: any) => {
+      if (data.status === 'success') {
+        this.newsViewNum = data.data.newsViewNum;
+      } else {
+        console.log(data);
       }
     }, err => {
       throw new Error(err);

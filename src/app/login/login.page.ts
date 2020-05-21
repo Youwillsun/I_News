@@ -98,6 +98,8 @@ export class LoginPage implements OnInit {
           window.localStorage.setItem('userId', INEncrypt.basicEncrypt(this.userId));
           // 跳转到首页
           this.router.navigate(['/tabs']);
+          this.loginAccount="";
+          this.loginPwd="";
         } else {
           this.ionic.Toast(data.data.msg, 'danger', "top");
         }
